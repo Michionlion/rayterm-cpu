@@ -1,0 +1,26 @@
+language: cpp
+
+before_install:
+  - gem install mdl
+  - wget https://services.gradle.org/distributions/gradle-4.9-bin.zip
+  - unzip -d $HOME gradle-4.9-bin.zip
+  # probably don't need this but just to be sure
+  - rm -rf gradle-4.9-bin.zip
+  # add gradle bin to path at the beginning to ensure it overwrites old gradle
+  - export PATH="$HOME/gradle-4.9/bin:$PATH"
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/4.9
+    - $HOME/.gradle/caches/jars-3
+    - $HOME/.gradle/caches/modules-2
+
+script:
+  # build
+  - gradle clean check
+  - gradle build
+  # check docs
+  - mdl README.md
