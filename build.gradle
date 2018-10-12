@@ -1,0 +1,20 @@
+plugins {
+	id 'cpp'
+}
+
+model {
+    components {
+        rayterm(NativeExecutableSpec)
+    }
+    binaries {
+        all {
+            linker.args "-lncurses"
+        }
+    }
+}
+
+task install(type: Copy) {
+    dependsOn 'build'
+    from 'build/exe/rayterm/rayterm'
+    into "${System.getProperty("user.home")}/.local/bin"
+}
