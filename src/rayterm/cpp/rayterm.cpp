@@ -1,32 +1,25 @@
-#include "rayterm.h"
 #include <iostream>
-#include <ncurses.h>
-
-std::string getHello() {
-    return "Hello World!";
-}
+#include "terminal.hpp"
 
 int main (int argc, char *argv[]) {
 
+    printf("Starting RayTerm...\n");
+
     // initalize ncurses
-    initscr();
-    // this doesn't work for some reason
-    cbreak();
-    noecho();
-    keypad(stdscr, true);
+    setup();
+
 
     // do fancy hello stuff
     wborder(stdscr, 0, 0, 0, 0, 0, 0, 0, 0);
     move(1,1);
-    attron(A_STANDOUT);
-    addstr(getHello().c_str());
-    attroff(A_STANDOUT);
+    attron(A_BOLD);
+    addstr("Hello World");
+    attroff(A_BOLD);
 
     // show changes
     refresh();
-
-    std::cout << getch() << "\n";
+    getch();
 
     // do cleanup/exit
-    endwin();
+    cleanup();
 }
