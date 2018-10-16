@@ -16,5 +16,5 @@ model {
 task install(type: Copy) {
     dependsOn 'build'
     from 'build/exe/rayterm/rayterm'
-    into "${System.getProperty("user.home")}/.local/bin"
+    into "${System.getProperty("user.home")}/${install_location}"
 }
