@@ -16,8 +16,11 @@ void mainrefresh(void);
 void handle_resize(void);
 void cleanup(void);
 
-void mainloop(void);
+// Utility
+void waddstr_attr(WINDOW* window, const char* str, chtype attr);
 
-void waddstr_attr(WINDOW* window, char* str, chtype attr);
 
+// Main interactive functions
+void set_info_string(const char* str);
+void set_pixel(const int x, const int y, const void* pixelData);
 #endif
