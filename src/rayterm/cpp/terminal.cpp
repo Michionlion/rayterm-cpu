@@ -17,8 +17,8 @@ void setup() {
     init_pair(1,COLOR_WHITE, COLOR_BLUE);
     init_pair(2,COLOR_WHITE, COLOR_GREEN);
 
-    WINDOWS.main = subwin(stdscr, LINES-2, 0, 0, 0);
-    WINDOWS.info = subwin(stdscr, 2, 0, LINES-2, 0);
+    WINDOWS.main = subwin(stdscr, LINES-1, 0, 0, 0);
+    WINDOWS.info = subwin(stdscr, 1, 0, LINES-1, 0);
     wbkgd(WINDOWS.main, COLOR_PAIR(2));
     wbkgd(WINDOWS.info, COLOR_PAIR(1));
 
@@ -41,27 +41,40 @@ void mainrefresh() {
     wrefresh(WINDOWS.main);
 }
 
+// Probably should just ignore resize
 void handle_resize() {
+    wresize(stdscr, LINES, COLS);
+    wclear(stdscr);
+    wresize(WINDOWS.info, 1, COLS);
+    wresize(WINDOWS.main, LINES - 1, COLS);
+    mvwin(WINDOWS.info, LINES - 1, 0);
+    mvwin(WINDOWS.main, 0, 0);
+
+    // wbkgd(WINDOWS.main, COLOR_PAIR(2));
+    // wbkgd(WINDOWS.info, COLOR_PAIR(1));
     wclear(WINDOWS.main);
     wclear(WINDOWS.info);
-
-    wmove(stdscr, 0, 0);
-    wresize(stdscr, LINES, COLS);
-    wmove(WINDOWS.main, 0, 0);
-    wresize(WINDOWS.main, LINES - 2, COLS);
-    wmove(WINDOWS.info, LINES - 2, 0);
-    wresize(WINDOWS.info, 2, COLS);
+    allrefresh();
     allrefresh();
 }
 
-void waddstr_attr(WINDOW* window, char* str, chtype attr) {
+void waddstr_attr(WINDOW* window, const char* str, chtype attr) {
     for(int i = 0; str[i] != '\0'; i++) {
         waddch(window, str[i] | attr);
     }
 }
 
-void mainloop() {
+// auto-refreshes info window
+void set_info_string(const char* str) {
+    wclear(WINDOWS.info);
+    mvwprintw(WINDOWS.info, 0, 0, str);
+    inforefresh();
+}
 
+// must call mainrefresh after
+void set_pixel(const int x, const int y, const void* pixelData) {
+    wmove(WINDOWS.main, x, y);
+    waddch(WINDOWS.main, *((char*)pixelData));
 }
 
 // Close down Terminal
