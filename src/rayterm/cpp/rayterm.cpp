@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "terminal.hpp"
 
 int main (int argc, char *argv[]) {
@@ -13,26 +14,24 @@ int main (int argc, char *argv[]) {
     wborder(WINDOWS.main, 0, 0, 0, 0, 0, 0, 0, 0);
     wmove(WINDOWS.main, 1,1);
     waddstr_attr(WINDOWS.main, "Hello World from the main screen", A_BOLD);
-    waddstr(WINDOWS.info, "Info Screen");
-    wmove(WINDOWS.info, 1, 0);
-    waddstr(WINDOWS.info, "And again!");
+    set_info_string("INFO WINDOW");
 
     // show changes
     allrefresh();
 
-    int key;
-    while(key = getch()) {
-        wclear(WINDOWS.info);
-        mvwprintw(WINDOWS.info, 0, 0, "KEY: %d; LINES: %d; COLS: %d", key, LINES, COLS);
-        inforefresh();
-        mainloop();
+    int key = 0;
+    int frames = 0;
+    while((key = getch()) != 0) {
+        std::stringstream s;
+        s << "KEY: " << key << "; LINES: " << LINES << "; COLS: " << COLS << "; FRAME: " << frames++;
+        set_info_string(s.str().c_str());
 
         if(key == '\n') {
             cleanup();
             printf("Got EXIT, exiting\n");
             break;
         } else if (key == KEY_RESIZE) {
-            wresize(WINDOWS.main, LINES - 2, 0);
+            handle_resize();
         }
     }
 
