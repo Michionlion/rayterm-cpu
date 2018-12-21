@@ -1,2 +1,2 @@
 gradle build
-./build/exe/rayterm/rayterm
+./build/exe/rayterm/rayterm 2> error.log
