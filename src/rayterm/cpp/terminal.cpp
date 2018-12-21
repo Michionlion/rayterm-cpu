@@ -58,6 +58,13 @@ void handle_resize() {
     allrefresh();
 }
 
+Vec2 get_main_size() {
+    Vec2 sizes = Vec2();
+    getmaxyx(WINDOWS.main, sizes.y, sizes.x);
+
+    return sizes;
+}
+
 void waddstr_attr(WINDOW* window, const char* str, chtype attr) {
     for(int i = 0; str[i] != '\0'; i++) {
         waddch(window, str[i] | attr);
@@ -72,7 +79,7 @@ void set_info_string(const char* str) {
 }
 
 // must call mainrefresh after
-void set_pixel(const int x, const int y, const void* pixelData) {
+void set_character_pixel(const int x, const int y, const void* pixelData) {
     wmove(WINDOWS.main, x, y);
     waddch(WINDOWS.main, *((char*)pixelData));
 }
