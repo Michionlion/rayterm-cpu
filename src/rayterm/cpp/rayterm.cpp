@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include "terminal.hpp"
+#include "translator.hpp"
 
 int main (int argc, char *argv[]) {
 
@@ -19,16 +20,18 @@ int main (int argc, char *argv[]) {
     // show changes
     allrefresh();
 
+
+    render();
+
     int key = 0;
     int frames = 0;
     while((key = getch()) != 0) {
-        std::stringstream s;
-        s << "KEY: " << key << "; LINES: " << LINES << "; COLS: " << COLS << "; FRAME: " << frames++;
-        set_info_string(s.str().c_str());
-
+//        std::stringstream s;
+//        s << "KEY: " << key << "; LINES: " << LINES << "; COLS: " << COLS << "; FRAME: " << frames++;
+//        set_info_string(s.str().c_str());
+//
         if(key == '\n') {
-            cleanup();
-            printf("Got EXIT, exiting\n");
+            printf("Got ENTER, exiting\n");
             break;
         } else if (key == KEY_RESIZE) {
             handle_resize();
