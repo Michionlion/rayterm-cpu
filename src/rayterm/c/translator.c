@@ -18,8 +18,8 @@ void render() {
     for(float x = 0; x < 1; x += 1.0 / sizes.x) {
         for(float y = 0; y < 1; y += 0.5 / sizes.y) {
             Vec2 pos = window_to_pixel(x, y);
-	    fprintf(stderr, "x:%d, y:%d\n", pos.x, pos.y);
-	}
+            //fprintf(stderr, "x:%d, y:%d\n", pos.x, pos.y);
+        }
     }
 
 }

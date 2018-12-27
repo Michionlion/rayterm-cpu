@@ -4,8 +4,6 @@
 
 int main (int argc, char *argv[]) {
 
-    printf("Starting RayTerm...\n");
-
     // initalize ncurses
     setup();
 
@@ -35,5 +33,4 @@ int main (int argc, char *argv[]) {
 
     // do cleanup/exit
     cleanup();
-    printf("Finished\n");
 }

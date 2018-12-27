@@ -86,8 +86,8 @@ void set_character_pixel(const int x, const int y, const void* pixelData) {
 
 // Close down Terminal
 void cleanup() {
-    printf("\n");
     delwin(WINDOWS.main);
     delwin(WINDOWS.info);
     endwin();
+    printf("\n");
 }
