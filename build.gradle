@@ -19,8 +19,9 @@ model {
     binaries {
         all {
             linker.args "-lncurses"
+            cCompiler.args "-std=c99", "-Wall"
             if (buildType == buildTypes.debug) {
-                cppCompiler.args "-g"
+                cCompiler.args "-g"
             }
         }
     }
@@ -37,11 +38,6 @@ model {
         gcc(Gcc) {
             // Uncomment to use GCC not in PATH
             // path "/usr/bin/gcc"
-            eachPlatform {
-                cppCompiler.withArguments { args ->
-                    args << "-std=c99" << "Wall"
-                }
-            }
         }
     }
 }
