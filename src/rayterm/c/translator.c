@@ -1,7 +1,7 @@
-# include "terminal.hpp"
+# include "terminal.h"
 
 Vec2 window_to_pixel(float x, float y) {
-    Vec2 n = Vec2();
+    Vec2 n;
     Vec2 sizes = get_main_size();
     n.x = x * sizes.x;
     n.y = y * sizes.y;

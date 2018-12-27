@@ -1,8 +1,8 @@
-#include "terminal.hpp"
-#include <iostream>
+#include "terminal.h"
+#include "stdio.h"
 
 // initialize global variable
-Windows WINDOWS;
+struct Windows WINDOWS;
 
 // Setup Terminal
 void setup() {
@@ -59,7 +59,7 @@ void handle_resize() {
 }
 
 Vec2 get_main_size() {
-    Vec2 sizes = Vec2();
+    Vec2 sizes;
     getmaxyx(WINDOWS.main, sizes.y, sizes.x);
 
     return sizes;
@@ -86,7 +86,7 @@ void set_character_pixel(const int x, const int y, const void* pixelData) {
 
 // Close down Terminal
 void cleanup() {
-    std::cout << "\n";
+    printf("\n");
     delwin(WINDOWS.main);
     delwin(WINDOWS.info);
     endwin();

@@ -1,7 +1,6 @@
-#include <iostream>
-#include <sstream>
-#include "terminal.hpp"
-#include "translator.hpp"
+#include "stdio.h"
+#include "terminal.h"
+#include "translator.h"
 
 int main (int argc, char *argv[]) {
 
@@ -26,10 +25,6 @@ int main (int argc, char *argv[]) {
     int key = 0;
     int frames = 0;
     while((key = getch()) != 0) {
-//        std::stringstream s;
-//        s << "KEY: " << key << "; LINES: " << LINES << "; COLS: " << COLS << "; FRAME: " << frames++;
-//        set_info_string(s.str().c_str());
-//
         if(key == '\n') {
             printf("Got ENTER, exiting\n");
             break;
@@ -40,4 +35,5 @@ int main (int argc, char *argv[]) {
 
     // do cleanup/exit
     cleanup();
+    printf("Finished\n");
 }

@@ -1,7 +1,6 @@
 #ifndef _RAY_TERMINAL_H_
 #define _RAY_TERMINAL_H_
 
-#include <string>
 #include <ncurses.h>
 
 extern struct Windows {
@@ -9,10 +8,10 @@ extern struct Windows {
     WINDOW* main;
 } WINDOWS;
 
-struct Vec2 {
+typedef struct Vec2 {
     int x;
     int y;
-};
+} Vec2;
 
 void setup(void);
 void allrefresh(void);
