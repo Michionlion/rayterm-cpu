@@ -17,12 +17,11 @@ int main (int argc, char *argv[]) {
     // show changes
     allrefresh();
 
-
-    render();
-
     int key = 0;
     int frames = 0;
     while((key = getch()) != 0) {
+        render();
+        allrefresh();
         if(key == '\n') {
             printf("Got ENTER, exiting\n");
             break;
