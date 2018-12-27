@@ -6,14 +6,18 @@ model {
     components {
         rayterm(NativeLibrarySpec)
         rtexplore(NativeExecutableSpec) {
+            sources.c.lib library: "rayterm", linkage: link_type
+        }
+        raytermTest(NativeExecutableSpec) {
             sources {
-                c.lib library: "rayterm", linkage: link_type
+                c.lib library: "rayterm", linkage: "static"
+                c.source.srcDir "src/rayterm/test"
             }
+            targetBuildTypes "debug"
         }
     }
     binaries {
         all {
-            //lib library: "rayterm", linkage: "static"
             linker.args "-lncurses"
             if (buildType == buildTypes.debug) {
                 cppCompiler.args "-g"
@@ -41,4 +45,17 @@ task install(type: Copy) {
     dependsOn 'build'
     from 'build/libs/rayterm/shared/release'
     into "${System.getProperty("user.home")}/${install_location}"
+}
+
+task raytermTest(type: Exec) {
+    commandLine "./build/exe/raytermTest/raytermTest"
+}
+
+task test {
+    dependsOn "assemble"
+    dependsOn "raytermTest"
+
+    mustRunAfter "assemble"
+    tasks.findByName('build').dependsOn "test"
+    tasks.findByName('raytermTest').mustRunAfter 'assemble'
 }
