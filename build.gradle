@@ -1,20 +1,44 @@
 plugins {
-	id 'cpp'
+    id 'c'
 }
 
 model {
     components {
-        rayterm(NativeExecutableSpec)
+        rayterm(NativeLibrarySpec)
+        rtexplore(NativeExecutableSpec) {
+            sources {
+                c.lib library: "rayterm", linkage: link_type
+            }
+        }
     }
     binaries {
         all {
+            //lib library: "rayterm", linkage: "static"
             linker.args "-lncurses"
+            if (buildType == buildTypes.debug) {
+                cppCompiler.args "-g"
+            }
+        }
+    }
+    buildTypes {
+        debug
+        release
+    }
+    platforms {
+        x64 {
+            architecture "x86_64"
+        }
+    }
+    toolChains {
+        gcc(Gcc) {
+            // Uncomment to use GCC not in PATH
+            // path "/usr/bin/gcc"
         }
     }
 }
 
 task install(type: Copy) {
     dependsOn 'build'
-    from 'build/exe/rayterm/rayterm'
+    from 'build/libs/rayterm/shared/release'
     into "${System.getProperty("user.home")}/${install_location}"
 }
