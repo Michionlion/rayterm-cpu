@@ -20,7 +20,7 @@ cache:
 
 script:
   # build
-  - gradle clean check
-  - gradle build
+  - gradle clean check --console=plain
+  - gradle build --console=plain
   # check docs
   - mdl README.md
