@@ -24,7 +24,7 @@ void sphere::intersects(ray r, intersection& record) {
         scalar t            = (-b - sqrt_discrim) * inv_denom;
         bool dropped        = false;
         scalar ot;
-        if (t < MIN_CONTACT) {
+        if (t < -MIN_CONTACT) {
             ot      = t;
             t       = (-b + sqrt_discrim) * inv_denom;
             dropped = true;
