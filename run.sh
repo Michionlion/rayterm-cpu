@@ -13,7 +13,7 @@ if [ $? -eq 0 ]; then
     sleep 0.5
 
     #LD_LIBRARY_PATH=build/libs/rayterm/shared/$TYPE/ ./build/exe/rtexplore/$TYPE/rtexplore 2> error.log
-    ./build/exe/rtexplore//$TYPE/rtexplore 2> error.log
+    xterm -T "i3-float" -geometry 100x50+200+150 -fa "AnonymousProMinus Nerd Font" -fs 8 -e ./build/exe/rtexplore/$TYPE/rtexplore 2> error.log
 
     LOG=$(cat error.log)
 
