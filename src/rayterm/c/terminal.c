@@ -1,5 +1,6 @@
 #include "terminal.h"
 #include "stdio.h"
+#include "stdlib.h"
 
 TERMINAL* setup() {
     initscr();
@@ -21,15 +22,16 @@ TERMINAL* setup() {
 
     keypad(term->main, true);
     keypad(term->info, true);
+
+    return term;
 }
 
-void allrefresh() {
+void repaint(TERMINAL* term) {
 
 }
 
-/* don't handle resizing for now
 void handle_resize() {
-    wresize(stdscr, LINES, COLS);
+    /*wresize(stdscr, LINES, COLS);
     wclear(stdscr);
     wresize(WINDOWS.info, 1, COLS);
     wresize(WINDOWS.main, LINES - 1, COLS);
@@ -40,10 +42,10 @@ void handle_resize() {
     // wbkgd(WINDOWS.info, COLOR_PAIR(1));
     wclear(WINDOWS.main);
     wclear(WINDOWS.info);
-    allrefresh();
-    allrefresh();
+    repaint();
+    */
 }
-*/
+
 
 VECTOR* get_size(WINDOW* win) {
     VECTOR* sizes = (VECTOR*) malloc(sizeof(VECTOR));
@@ -66,17 +68,18 @@ void set_info_string(TERMINAL* term, const char* str) {
 }
 
 // must call refresh after
-void set_character_pixel(TERMINAL* term, const POINT* position, const char chr, const Color background, const Color foreground) {
-    wmove(term->main, x, y);
-    chtype pixel = chr;
+void set_character_pixel(TERMINAL* term, POINT* pos, const char ch, const Color background, const Color foreground) {
+    wmove(term->main, pos->x, pos->y);
+    chtype pixel = ch;
     // TODO: add background and foreground to pixel
-    waddch(term->main, *((char*)pixelData));
+    waddch(term->main, pixel);
 }
 
 // Close down Terminal
-void cleanup() {
-    delwin(WINDOWS.main);
-    delwin(WINDOWS.info);
+void cleanup(TERMINAL* term) {
+    delwin(term->main);
+    delwin(term->info);
     endwin();
+    free(term);
     printf("\n");
 }
