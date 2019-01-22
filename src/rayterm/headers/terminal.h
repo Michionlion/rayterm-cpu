@@ -1,5 +1,5 @@
-#ifndef _RAY_TERMINAL_H_
-#define _RAY_TERMINAL_H_
+#ifndef _RAYTERM_TERMINAL_H_
+#define _RAYTERM_TERMINAL_H_
 
 #include <ncurses.h>
 #include <stdint.h>
