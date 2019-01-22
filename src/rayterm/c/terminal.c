@@ -24,7 +24,7 @@ TERMINAL* setup() {
 }
 
 void allrefresh() {
-    
+
 }
 
 /* don't handle resizing for now
@@ -66,9 +66,10 @@ void set_info_string(TERMINAL* term, const char* str) {
 }
 
 // must call refresh after
-void set_character_pixel(TERMINAL* term, const POINT* position, const char, const Color background, const Color foreground) {
+void set_character_pixel(TERMINAL* term, const POINT* position, const char chr, const Color background, const Color foreground) {
     wmove(term->main, x, y);
-    chtype pixel = char | 
+    chtype pixel = chr;
+    // TODO: add background and foreground to pixel
     waddch(term->main, *((char*)pixelData));
 }
 
