@@ -4,6 +4,6 @@
 #include "terminal.h"
 
 POINT* window_to_pixel(float x, float y);
-void render();
+void render(TERMINAL* terminal);
 
 #endif

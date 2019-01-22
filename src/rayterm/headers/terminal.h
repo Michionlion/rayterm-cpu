@@ -29,7 +29,7 @@ typedef struct {
 TERMINAL* setup(void);
 
 // refresh(TERMINAL*) redraws the entire terminal given.
-void refresh(TERMINAL* terminal);
+void repaint(TERMINAL* terminal);
 
 // cleanup(TERMINAL*) frees any resources utilized by the terminal given.
 void cleanup(TERMINAL* terminal);
