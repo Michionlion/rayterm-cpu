@@ -29,13 +29,13 @@ typedef struct {
 TERMINAL* setup(void);
 
 // refresh(TERMINAL*) redraws the entire terminal given.
-void refresh(TERMINAL*);
+void refresh(TERMINAL* terminal);
 
 // cleanup(TERMINAL*) frees any resources utilized by the terminal given.
-void cleanup(TERMINAL*);
+void cleanup(TERMINAL* terminal);
 
 // get_size(WINDOW*) returns the size of the window given.
-VECTOR* get_size(WINDOW*);
+VECTOR* get_size(WINDOW* window);
 
 // add_str(WINDOW*, char*, chtype) draws the given string to the window given with the given attributes.
 void add_str(WINDOW* window, const char* str, chtype attr);
