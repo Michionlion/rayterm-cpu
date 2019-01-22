@@ -63,7 +63,8 @@ void add_str(WINDOW* window, const char* str, chtype attr) {
 // auto-refreshes info window
 void set_info_string(TERMINAL* term, const char* str) {
     wclear(term->info);
-    mvwprintw(term->info, 0, 0, str);
+    wmove(term->info, 0, 0);
+    add_str(term->info, str, A_BOLD);
     wrefresh(term->info);
 }
 
