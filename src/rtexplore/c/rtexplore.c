@@ -1,35 +1,37 @@
 #include "stdio.h"
+#include "string.h"
 #include "terminal.h"
 #include "translator.h"
 
 int main (int argc, char *argv[]) {
 
     // initalize ncurses
-    setup();
+    TERMINAL* term = setup();
 
 
     // do fancy hello stuff
-    wborder(WINDOWS.main, 0, 0, 0, 0, 0, 0, 0, 0);
-    wmove(WINDOWS.main, 1,1);
-    waddstr_attr(WINDOWS.main, "Hello World from the main screen", A_BOLD);
-    set_info_string("INFO WINDOW");
+    wborder(term->main, 0, 0, 0, 0, 0, 0, 0, 0);
+    wmove(term->main, 1,1);
+    add_str(term->main, "Hello World from the main screen", A_BOLD);
+    set_info_string(term, "INFO WINDOW");
 
     // show changes
-    allrefresh();
+    repaint(term);
 
     int key = 0;
     int frames = 0;
     while((key = getch()) != 0) {
-        render();
-        allrefresh();
+        render(term);
+        repaint(term);
         if(key == '\n') {
             printf("Got ENTER, exiting\n");
             break;
         } else if (key == KEY_RESIZE) {
-            handle_resize();
+            handle_resize(term);
         }
+        frames++;
     }
 
     // do cleanup/exit
-    cleanup();
+    cleanup(term);
 }
