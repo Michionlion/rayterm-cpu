@@ -1,4 +1,5 @@
-error.log
+/error.log
+/test_image.ppm
 
 # Build directories
 /build/
