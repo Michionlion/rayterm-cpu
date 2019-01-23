@@ -14,10 +14,10 @@ int raytrace_ppm(const char* filename) {
     fprintf(outfile, "P3\n%i %i\n255\n", width, height);
     for (int y = height-1; y >= 0; y--) {
         for (int x = 0; x < width; x++) {
-            int r = (int) (255.99 * x / width);
-            int g = (int) (255.99 * y / height);
+            int r = (int) ((256 * (float) x) / width);
+            int g = (int) ((256 * (float) y) / height);
             int b = 0.2;
-            fprintf(outfile, "%i %i %i", r, g, b);
+            fprintf(outfile, "%i %i %i\n", r, g, b);
         }
     }
     fclose(outfile);

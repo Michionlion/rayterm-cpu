@@ -48,15 +48,21 @@ task install(type: Copy) {
     into "${System.getProperty("user.home")}/${install_location}"
 }
 
-task raytermTest(type: Exec) {
-    commandLine "./build/exe/raytermTest/raytermTest"
+task raytracingTest(type: Exec) {
+    commandLine "./build/exe/raytermTest/raytermTest", "raytracing"
+    mustRunAfter "assemble"
+}
+
+task interfaceTest(type: Exec) {
+    commandLine "./build/exe/raytermTest/raytermTest", "interface"
+    mustRunAfter "assemble"
 }
 
 task test {
     dependsOn "assemble"
-    dependsOn "raytermTest"
+    dependsOn "raytracingTest"
+    dependsOn "interfaceTest"
 
     mustRunAfter "assemble"
     tasks.findByName('build').dependsOn "test"
-    tasks.findByName('raytermTest').mustRunAfter 'assemble'
 }
