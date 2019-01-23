@@ -11,7 +11,7 @@ int interface_suite();
 int main(int argc, char** argv) {
     if(argc == 0) {
         printf("Missing test suite identifier!");
-        exit(-1);
+        return -1;
     }
 
     int retval = 0;
