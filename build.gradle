@@ -55,7 +55,7 @@ model {
 task buildGoogleTest(type: Exec) {
     def gtest = "${projectDir.getPath()}/${google_test}"
     doFirst { exec { commandLine "mkdir", "${gtest}/build" } }
-    doFirst { exec { commandLine "rm", "-r", "${gtest}/build" } }
+    doFirst { exec { commandLine "rm", "-rf", "${gtest}/build" } }
     commandLine "g++", "-std=c++11", "-isystem", "${gtest}/include", "-I${gtest}", "-pthread", "-c", "${gtest}/src/gtest-all.cc", "-o", "${gtest}/build/gtest-all.o"
     doLast {
         exec {
