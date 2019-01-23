@@ -69,3 +69,8 @@ task install(type: Copy) {
     from 'build/libs/rayterm/shared/release'
     into "${System.getProperty("user.home")}/${install_location}"
 }
+
+tasks.withType(RunTestExecutable) {
+    args "--gtest_output=xml:test_detail.xml"
+}
+
