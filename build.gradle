@@ -1,28 +1,44 @@
 plugins {
-    id 'c'
+    id 'cpp'
+    id 'google-test-test-suite'
 }
 
 model {
+    repositories {
+        libs(PrebuiltLibraries) {
+            googleTest {
+                headers.srcDir new File(projectDir, "${google_test}/include") 
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = file(projectDir.getPath() + "/${google_test}/build/libgtest.a")
+                }
+            }
+        }
+    }
     components {
         rayterm(NativeLibrarySpec)
         rtexplore(NativeExecutableSpec) {
-            sources.c.lib library: "rayterm", linkage: link_type
+            sources.cpp.lib library: "rayterm", linkage: link_type
         }
-        raytermTest(NativeExecutableSpec) {
-            sources {
-                c.lib library: "rayterm", linkage: "static"
-                c.source.srcDir "src/rayterm/test"
-            }
-            targetBuildTypes "debug"
+    }
+    testSuites {
+        raytermTest(GoogleTestTestSuiteSpec) {
+            testing $.components.rayterm
+            sources.cpp.source.srcDir "src/rayterm/test"
         }
     }
     binaries {
         all {
             linker.args "-lncurses"
-            cCompiler.args "-std=c99", "-Wall"
+            cppCompiler.args "-std=c++11", "-Wall"
             if (buildType == buildTypes.debug) {
-                cCompiler.args "-g"
+                cppCompiler.args "-g"
             }
+        }
+        withType(GoogleTestTestSuiteBinarySpec) {
+            lib library: "googleTest", linkage: "static"
+            // assumes linux
+            cppCompiler.args '-pthread'
+            linker.args '-pthread'
         }
     }
     buildTypes {
@@ -34,10 +50,16 @@ model {
             architecture "x86_64"
         }
     }
-    toolChains {
-        gcc(Gcc) {
-            // Uncomment to use GCC not in PATH
-            // path "/usr/bin/gcc"
+}
+
+task buildGoogleTest(type: Exec) {
+    def gtest = "${projectDir.getPath()}/${google_test}"
+    doFirst { exec { commandLine "mkdir", "${gtest}/build" } }
+    doFirst { exec { commandLine "rm", "-r", "${gtest}/build" } }
+    commandLine "g++", "-std=c++11", "-isystem", "${gtest}/include", "-I${gtest}", "-pthread", "-c", "${gtest}/src/gtest-all.cc", "-o", "${gtest}/build/gtest-all.o"
+    doLast {
+        exec {
+            commandLine "ar", "-rv", "${gtest}/build/libgtest.a", "${gtest}/build/gtest-all.o"
         }
     }
 }
@@ -46,23 +68,4 @@ task install(type: Copy) {
     dependsOn 'build'
     from 'build/libs/rayterm/shared/release'
     into "${System.getProperty("user.home")}/${install_location}"
-}
-
-task raytracingTest(type: Exec) {
-    commandLine "./build/exe/raytermTest/raytermTest", "raytracing"
-    mustRunAfter "assemble"
-}
-
-task interfaceTest(type: Exec) {
-    commandLine "./build/exe/raytermTest/raytermTest", "interface"
-    mustRunAfter "assemble"
-}
-
-task test {
-    dependsOn "assemble"
-    dependsOn "raytracingTest"
-    dependsOn "interfaceTest"
-
-    mustRunAfter "assemble"
-    tasks.findByName('build').dependsOn "test"
 }
