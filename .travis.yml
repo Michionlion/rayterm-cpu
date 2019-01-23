@@ -8,6 +8,7 @@ before_install:
   - rm -rf gradle-5.0-bin.zip
   # add gradle bin to path at the beginning to ensure it overwrites old gradle
   - export PATH="$HOME/gradle-5.0/bin:$PATH"
+  - gradle buildGoogleTest --console=plain
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -20,7 +21,8 @@ cache:
 
 script:
   # build
-  - gradle clean check --console=plain
+  - gradle clean --console=plain
   - gradle build --console=plain
+  - gradle test --console=plain
   # check docs
   - mdl README.md
