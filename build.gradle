@@ -70,7 +70,14 @@ task install(type: Copy) {
     into "${System.getProperty("user.home")}/${install_location}"
 }
 
-tasks.withType(RunTestExecutable) {
+task test {
+    dependsOn "clean"
+}
+
+tasks.withType(RunTestExecutable) { task ->
     args "--gtest_output=xml:test_detail.xml"
+    tasks.test.dependsOn task
+    // this may mess up other things
+    mustRunAfter "clean"
 }
 
