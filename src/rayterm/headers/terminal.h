@@ -34,6 +34,9 @@ void repaint(TERMINAL* terminal);
 // cleanup(TERMINAL*) frees any resources utilized by the terminal given.
 void cleanup(TERMINAL* terminal);
 
+// handle_resize(TERMINAL*) resets the terminal sizes to handle a resize.
+void handle_resize(TERMINAL* terminal);
+
 // get_size(WINDOW*) returns the size of the window given.
 VECTOR* get_size(WINDOW* window);
 

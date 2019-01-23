@@ -10,7 +10,7 @@ POINT* window_to_pixel(float x, float y, VECTOR* sizes) {
 }
 
 void render(TERMINAL* term) {
-    VECTOR* sizes = get_size(term);
+    VECTOR* sizes = get_size(term->main);
     for(float x = 0; x < 1; x += 1.0 / sizes->x) {
         for(float y = 0; y < 1; y += 0.5 / sizes->y) {
             POINT* pos = window_to_pixel(x, y, sizes);

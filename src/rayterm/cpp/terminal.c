@@ -30,7 +30,7 @@ void repaint(TERMINAL* term) {
 
 }
 
-void handle_resize() {
+void handle_resize(TERMINAL* term) {
     /*wresize(stdscr, LINES, COLS);
     wclear(stdscr);
     wresize(WINDOWS.info, 1, COLS);
