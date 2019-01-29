@@ -14,12 +14,12 @@ model {
                 }
             }
             eigen {
-                headers.srcDirs "${eigen}"
+                headers.srcDirs "${eigen_path}"
             }
             libigl {
-                headers.srcDirs "${libigl}/include"
+                headers.srcDirs "${libigl_path}/include"
                 //binaries.withType(StaticLibraryBinary) {
-                //    staticLibraryFile = file(projectDir.getPath() + "/${libigl}/build/libigl.a")
+                //    staticLibraryFile = file(projectDir.getPath() + "/${libigl_path}/build/libigl.a")
                 //}
             }
         }
@@ -42,7 +42,7 @@ model {
     binaries {
         all {
             linker.args "-lncurses"
-            cppCompiler.args "-std=c++11", "-msse4", "-Wall", "-I${eigen}"
+            cppCompiler.args "-std=c++11", "-msse4", "-Wall"
             if (buildType == buildTypes.debug) {
                 cppCompiler.args "-g"
             }
@@ -82,17 +82,17 @@ task buildGoogleTest(type: Exec) {
 task buildEigen(type: Exec) {
     dependsOn 'pullDeps'
     shouldRunAfter 'pullDeps'
-    //def eigen_path = "${projectDir.getPath()}/${eigen}"
+    //def f_eigen = "${projectDir.getPath()}/${eigen_path}"
 
     //doFirst { exec {
-    //    workingDir "${eigen_path}"
+    //    workingDir "${f_eigen}"
     //    commandLine "cmake", ".", "-B", "build", "-DINCLUDE_INSTALL_DIR=include", "-DCMAKE_INSTALL_PREFIX=/card/projects/rayterm/lib/eigen"
     //} }
-    //doFirst { exec { commandLine "mkdir", "${eigen_path}/build" } }
-    //doFirst { exec { commandLine "rm", "-rf", "${eigen_path}/build" } }
+    //doFirst { exec { commandLine "mkdir", "${f_eigen}/build" } }
+    //doFirst { exec { commandLine "rm", "-rf", "${f_eigen}/build" } }
 
 
-    //workingDir "${eigen_path}/build"
+    //workingDir "${f_eigen}/build"
     //commandLine "make", "install"
     commandLine 'echo', 'Updated Eigen headers'
 }
