@@ -4,8 +4,10 @@ A Ray-Tracing Graphics Engine for XTerm-like Terminals
 
 ## Development
 
-Use `gradle build` to build the project, and execute a binary located inside
-`build` to run it.
+The Google Test binary must be built before running or compiling `Rayterm`.
+This can be done with `gradle buildGoogleTest`. Then `gradle build` can be used
+to build the project. To run `RayTerm` either execute a binary located inside
+`build`, or execute the `run.sh` script.
 
 The `run.sh` script builds and then runs the built binary automatically.
 However, it starts a new `xterm` window explicitly, with preset geometry and
