@@ -25,9 +25,12 @@ model {
         }
     }
     components {
-        rayterm(NativeLibrarySpec) {
+        raymath(NativeLibrarySpec) {
             sources.cpp.lib library: 'eigen', linkage: 'api'
             sources.cpp.lib library: 'libigl', linkage: 'api'
+        }
+        rayterm(NativeLibrarySpec) {
+            sources.cpp.lib library: 'raymath', linkage: link_type
         }
         rtexplore(NativeExecutableSpec) {
             sources.cpp.lib library: "rayterm", linkage: link_type
@@ -37,6 +40,10 @@ model {
         raytermTest(GoogleTestTestSuiteSpec) {
             testing $.components.rayterm
             sources.cpp.source.srcDir "src/rayterm/test"
+        }
+        raymathTest(GoogleTestTestSuiteSpec) {
+            testing $.components.raymath
+            sources.cpp.source.srcDir "src/raymath/test"
         }
     }
     binaries {

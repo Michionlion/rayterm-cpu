@@ -1,5 +1,4 @@
 # include "stdio.h"
-# include "Eigen/Dense"
 
 int raytrace_ppm(const char* filename) {
 
