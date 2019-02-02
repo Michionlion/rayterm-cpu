@@ -40,10 +40,13 @@ model {
         raytermTest(GoogleTestTestSuiteSpec) {
             testing $.components.rayterm
             sources.cpp.source.srcDir "src/rayterm/test"
+            sources.cpp.lib library: 'raymath', linkage: link_type
         }
         raymathTest(GoogleTestTestSuiteSpec) {
             testing $.components.raymath
             sources.cpp.source.srcDir "src/raymath/test"
+            sources.cpp.lib library: 'eigen', linkage: 'api'
+            sources.cpp.lib library: 'libigl', linkage: 'api'
         }
     }
     binaries {
