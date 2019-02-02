@@ -111,9 +111,8 @@ task buildIGL(type: Exec) {
 }
 
 task pullDeps(type: Exec) {
-    doFirst { exec { commandLine 'git', 'submodule', 'init' } }
     doFirst { println 'Updating dependencies' }
-    commandLine 'git', 'submodule', 'foreach', 'git pull origin master'
+    commandLine 'git', 'submodule', 'update', '--init', '--recursive'
 }
 
 task deps {
@@ -139,4 +138,3 @@ tasks.withType(RunTestExecutable) { task ->
     // this may mess up other things
     mustRunAfter "clean"
 }
-
