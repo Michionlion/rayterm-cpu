@@ -116,7 +116,7 @@ task pullDeps(type: Exec) {
     commandLine 'git', 'submodule', 'foreach', 'git pull origin master'
 }
 
-task buildDeps {
+task deps {
     dependsOn 'pullDeps'
     dependsOn 'buildGoogleTest'
     dependsOn 'buildEigen'
