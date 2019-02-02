@@ -2,6 +2,7 @@
 #include "sphere.h"
 
 TEST(Sphere, Intersection) {
+    EXPECT(true);
     EXPECT_EQ(0, 0);
 }
 

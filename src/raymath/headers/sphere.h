@@ -2,6 +2,6 @@
 #define _RAYMATH_SPHERE_H_
 #include "Eigen/Dense"
 
-struct Sphere {}
+struct Sphere {};
 
 #endif
