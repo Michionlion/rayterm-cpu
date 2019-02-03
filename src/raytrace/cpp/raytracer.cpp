@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "camera.h"
 #include "raymath"
 
 int raytrace_ppm(const char* filename) {
@@ -8,16 +9,19 @@ int raytrace_ppm(const char* filename) {
         return 1;
     }
 
-    int width  = 128;
-    int height = 128;
+    int width  = 400;
+    int height = 200;
+
+    sphere object(vector(0, 0, -5), 2.5);
+    Camera* cam = new Camera(width, height);
 
     fprintf(outfile, "P3\n%i %i\n255\n", width, height);
     for (int y = height - 1; y >= 0; y--) {
         for (int x = 0; x < width; x++) {
-            int r = (int)((256 * (float)x) / width);
-            int g = (int)((256 * (float)y) / height);
-            int b = 0.2;
-            fprintf(outfile, "%i %i %i\n", r, g, b);
+            scalar u     = 2 * ((scalar(x) + 0.5) / scalar(width)) - 1;
+            scalar v     = 2 * ((scalar(y) + 0.5) / scalar(height)) - 1;
+            fprintf(outfile, "%i %i %i\n", int((u + 1) / 2 * 255), int((v + 1) / 2 * 255),
+                int((v + u + 2) / 4 * 255));
         }
     }
     fclose(outfile);
