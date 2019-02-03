@@ -1,6 +1,7 @@
 #include "sphere.h"
+#include "intersection.h"
 
-bool sphere::intersects(ray r) {
+intersection sphere::intersects(ray r) {
     // Solves (ray_dir^2)t^2 +2(ray_dir dot (ray_origin - sphere_center))t
     // + (ray_origin - sphere_center)^2 - sphere_radius^2 = 0 for t
     // this is formula 6 in the rayterm proposal
@@ -12,5 +13,11 @@ bool sphere::intersects(ray r) {
 
     scalar discriminant = b * b - 4 * a * c;
 
-    return (discriminant > 0);
+    if (discriminant < 0) {
+        return intersection(false);
+    } else {
+        scalar t   = (-b - sqrt(discriminant)) / (2.0 * a);
+        vector pos = r.pointAt(t);
+        return intersection(pos, (pos - center).normalized());
+    }
 }
