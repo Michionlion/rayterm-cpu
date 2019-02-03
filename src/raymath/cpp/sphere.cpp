@@ -1,7 +1,7 @@
 #include "sphere.h"
 #include "intersection.h"
 
-intersection sphere::intersects(ray r) {
+intersection sphere::intersects(const ray r) {
     // Solves (ray_dir^2)t^2 +2(ray_dir dot (ray_origin - sphere_center))t
     // + (ray_origin - sphere_center)^2 - sphere_radius^2 = 0 for t
     // this is formula 6 in the rayterm proposal
