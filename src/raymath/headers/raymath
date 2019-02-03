@@ -1,0 +1,8 @@
+#ifndef _RAYMATH_H_
+#define _RAYMATH_H_
+#include "color.h"
+#include "geometry.h"
+#include "intersection.h"
+#include "sphere.h"
+#include "types.h"
+#endif
