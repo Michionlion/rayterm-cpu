@@ -14,13 +14,14 @@ intersection sphere::intersects(const ray r) {
 
     scalar discriminant = b * b - 4 * a * c;
 
-    if (discriminant < 0) {
-        return intersection(false);
-    } else {
-        scalar t   = (-b - sqrt(discriminant)) / (2.0 * a);
-        vector pos = r.pointAt(t);
-        return intersection(pos, (pos - center).normalized(), texcoord(0, 0));
+    if (discriminant >= 0) {
+        scalar t = (-b - sqrt(discriminant)) / (2.0 * a);
+        if (t > 0) {
+            vector pos = r.pointAt(t);
+            return intersection(pos, (pos - center).normalized(), texcoord(0, 0));
+        }
     }
+    return intersection(false);
 }
 
 color sphere::colorize(const texcoord tc) { return shade; }
