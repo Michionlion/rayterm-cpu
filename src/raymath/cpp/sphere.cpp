@@ -19,7 +19,7 @@ intersection sphere::intersects(const ray r) {
     } else {
         scalar t   = (-b - sqrt(discriminant)) / (2.0 * a);
         vector pos = r.pointAt(t);
-        return intersection(pos, (pos - center).normalized());
+        return intersection(pos, (pos - center).normalized(), texcoord(0, 0));
     }
 }
 
