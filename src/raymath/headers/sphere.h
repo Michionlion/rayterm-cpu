@@ -1,6 +1,7 @@
 #ifndef _RAYMATH_SPHERE_H_
 #define _RAYMATH_SPHERE_H_
 #include "Eigen/Dense"
+#include "color.h"
 #include "geometry.h"
 #include "intersection.h"
 #include "types.h"
