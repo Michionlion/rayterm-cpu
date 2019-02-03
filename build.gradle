@@ -31,12 +31,18 @@ model {
         }
         raytrace(NativeLibrarySpec) {
             sources.cpp.lib library: 'raymath', linkage: link_type
+            sources.cpp.lib library: 'eigen', linkage: 'api'
+            sources.cpp.lib library: 'libigl', linkage: 'api'
         }
         rayterm(NativeLibrarySpec) {
             sources.cpp.lib library: 'raytrace', linkage: link_type
+            sources.cpp.lib library: 'eigen', linkage: 'api'
+            sources.cpp.lib library: 'libigl', linkage: 'api'
         }
         rtexplore(NativeExecutableSpec) {
             sources.cpp.lib library: "rayterm", linkage: link_type
+            sources.cpp.lib library: 'eigen', linkage: 'api'
+            sources.cpp.lib library: 'libigl', linkage: 'api'
         }
     }
     testSuites {
