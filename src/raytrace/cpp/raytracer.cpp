@@ -13,7 +13,7 @@ int raytrace_ppm(const char* filename) {
     int height = 200;
 
     sphere object(vector(0, 0, -5), 2.5);
-    Camera* cam = new Camera(width, height);
+    Camera* cam = new Camera(width, height, 72);
 
     fprintf(outfile, "P3\n%i %i\n255\n", width, height);
     for (int y = height - 1; y >= 0; y--) {
@@ -33,8 +33,8 @@ int raytrace_ppm(const char* filename) {
             // fprintf(outfile, "%i %i %i\n", 0, 0, 0);
             fprintf(outfile, "%i %i %i\n", col.r, col.g, col.b);
             // fprintf(outfile, "%i %i %i\n", int(yness * 255), int(yness * 255), int(yness * 255));
-            // fprintf(outfile, "%i %i %i\n", int((u + 1) / 2 * 255), int((v + 1) / 2 * 255),
-            //     int((v + u + 2) / 4 * 255));
+            // fprintf(outfile, "%i %i %i\n", int((u + 1) / 2 * 255), int((u + 1) / 2 * 255),
+            //     int((u + 1) / 2 * 255));
         }
     }
     fclose(outfile);
