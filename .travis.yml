@@ -23,6 +23,5 @@ script:
   # build
   - gradle clean --console=plain
   - gradle build --console=plain
-  - gradle test --console=plain
   # check readme
   - mdl README.md
