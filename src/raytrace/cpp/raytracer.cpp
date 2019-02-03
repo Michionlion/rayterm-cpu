@@ -20,8 +20,21 @@ int raytrace_ppm(const char* filename) {
         for (int x = 0; x < width; x++) {
             scalar u     = 2 * ((scalar(x) + 0.5) / scalar(width)) - 1;
             scalar v     = 2 * ((scalar(y) + 0.5) / scalar(height)) - 1;
-            fprintf(outfile, "%i %i %i\n", int((u + 1) / 2 * 255), int((v + 1) / 2 * 255),
-                int((v + u + 2) / 4 * 255));
+            ray r        = cam->get_screen_ray(u, v);
+            scalar yness = (r.direction().normalized()[1] + 1) / 2;
+            color outcol = (1 - yness) * color(1, 1, 1) + yness * color(0, 0, 0);
+
+            intersection hit = object.intersects(r);
+            if (hit) {
+                outcol = color(hit.normal + vector(1, 1, 1)) / 2;
+            }
+
+            colori col(outcol);
+            // fprintf(outfile, "%i %i %i\n", 0, 0, 0);
+            fprintf(outfile, "%i %i %i\n", col.r, col.g, col.b);
+            // fprintf(outfile, "%i %i %i\n", int(yness * 255), int(yness * 255), int(yness * 255));
+            // fprintf(outfile, "%i %i %i\n", int((u + 1) / 2 * 255), int((v + 1) / 2 * 255),
+            //     int((v + u + 2) / 4 * 255));
         }
     }
     fclose(outfile);
