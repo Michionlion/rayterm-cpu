@@ -10,6 +10,7 @@ TEST(Sphere, IntersectsTakesRay) {
 
 TEST(Sphere, RayIntersection) {
     EXPECT_TRUE(sphere(vector(0, 0, 0), 1).intersects(ray(vector(0, 0, -3), vector(0, 0, 1))));
+    EXPECT_FALSE(sphere(vector(0, 0, 0), 1).intersects(ray(vector(0, 0, -3), vector(0, 0, -1))));
     EXPECT_FALSE(sphere(vector(0, 0, 0), 1).intersects(ray(vector(0, 0, -3), vector(0, 1, 0.75))));
     EXPECT_FALSE(sphere(vector(0, 0, 0), 1).intersects(ray(vector(0, 0, -3), vector(0, 1, 0.75))));
     EXPECT_FALSE(sphere(vector(0, 5, 0), 2).intersects(ray(vector(0, 0, -3), vector(0, 0, 1))));
