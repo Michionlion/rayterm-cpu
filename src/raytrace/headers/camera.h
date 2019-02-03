@@ -1,30 +1,25 @@
 #ifndef _RAYTERM_CAMERA_H_
 #define _RAYTERM_CAMERA_H_
-
+#include <cmath>
 #include "raymath"
 
 class Camera {
-    vector top_left_corner;
-    vector horizontal;
-    vector vertical;
     vector origin;
     int width;
     int height;
     scalar aspect_ratio;
+    scalar fov;
+    scalar fov_height_len;
 
    public:
-    Camera(int width, int height) : width(width), height(height) {
-        top_left_corner = vector(-2, 1, -1);
-        horizontal      = vector(4, 0, 0);
-        vertical        = vector(0, 2, 0);
+    Camera(int width, int height, scalar fov) : width(width), height(height), fov(fov) {
         origin          = vector(0, 0, 0);
         aspect_ratio    = scalar(width) / scalar(height);
+        fov_height_len  = tan((fov / 2 * M_PI / 180));
     }
 
     // get the ray originating from the camera going through screen coordinate (u, v)
-    ray get_screen_ray(scalar u, scalar v) {
-        return ray(origin, top_left_corner + u * horizontal + v * vertical - origin);
-    }
+    ray get_screen_ray(scalar u, scalar v);
 };
 
 #endif
