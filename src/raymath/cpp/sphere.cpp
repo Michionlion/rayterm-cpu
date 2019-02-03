@@ -1,4 +1,5 @@
 #include "sphere.h"
+#include "color.h"
 #include "intersection.h"
 
 intersection sphere::intersects(const ray r) {
@@ -21,3 +22,5 @@ intersection sphere::intersects(const ray r) {
         return intersection(pos, (pos - center).normalized());
     }
 }
+
+color sphere::colorize(const texcoord tc) { return shade; }
