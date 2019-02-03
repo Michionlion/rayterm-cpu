@@ -1,10 +1,7 @@
 #include <gtest/gtest.h>
 #include "sphere.h"
 
-TEST(Sphere, Intersection) {
-    EXPECT(true);
-    EXPECT_EQ(0, 0);
-}
+TEST(Sphere, Intersection) {}
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
