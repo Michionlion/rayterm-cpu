@@ -1,4 +1,5 @@
-#include "stdio.h"
+#include <stdio.h>
+#include "raymath"
 
 int raytrace_ppm(const char* filename) {
     FILE* outfile = fopen(filename, "w");
