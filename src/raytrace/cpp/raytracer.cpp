@@ -13,9 +13,10 @@ int raytrace_ppm(const char* filename) {
     int height = 200;
 
     sphere object(vector(0, 0, -5), 2.5);
-    Camera* cam = new Camera(width, height, 72);
+    Camera* cam = new Camera(width, height, 78);
 
     fprintf(outfile, "P3\n%i %i\n255\n", width, height);
+    intersection hit;
     for (int y = height - 1; y >= 0; y--) {
         for (int x = 0; x < width; x++) {
             scalar u     = 2 * ((scalar(x) + 0.5) / scalar(width)) - 1;
@@ -24,7 +25,7 @@ int raytrace_ppm(const char* filename) {
             scalar yness = (r.direction().normalized()[1] + 1) / 2;
             color outcol = (1 - yness) * color(1, 1, 1) + yness * color(0, 0, 0);
 
-            intersection hit = object.intersects(r);
+            object.intersects(r, hit);
             if (hit) {
                 outcol = color(hit.normal + vector(1, 1, 1)) / 2;
             }
