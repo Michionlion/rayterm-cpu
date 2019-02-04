@@ -12,10 +12,11 @@ class World : geometry {
    public:
     World(){};
 
-    void add_object(geometry& geom) { objects.push_back(std::unique_ptr<geometry>(&geom)); }
+    void add_object(geometry* geom) { objects.push_back(std::unique_ptr<geometry>(geom)); }
 
     using geometry::intersects;
     void intersects(ray r, intersection& record);
+    color colorize(texcoord tc) { return color(0, 0, 0); }
 };
 
 #endif
