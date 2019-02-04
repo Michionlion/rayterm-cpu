@@ -4,4 +4,6 @@
 
 vector random_in_usphere();
 
+scalar random_scalar();
+
 #endif
