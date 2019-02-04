@@ -15,9 +15,8 @@ int raytrace_ppm(const char* filename) {
 
     World world;
 
-    world.add_object(new sphere(vector(0, -301, -5), 300));
-    world.add_object(new sphere(vector(0, 0, -5), 1.6));
-    world.add_object(new sphere(vector(0, 2, -5), 2));
+    world.add_object(new sphere(vector(0, -301, -3), 300));
+    world.add_object(new sphere(vector(0, 0, -3), 1.25));
 
     // world.add_object(new sphere(vector(0, -1, -3), 1));
     // world.add_object(new sphere(vector(0, 1, -2.5), 1.5));
@@ -33,13 +32,18 @@ int raytrace_ppm(const char* filename) {
             scalar v = 2 * ((scalar(y) + 0.5) / scalar(height)) - 1;
 
             ray r        = cam->get_screen_ray(u, v);
-            scalar yness = (r.direction().normalized()[1] + 1) / 2;
+            scalar yness = (r.direction().normalized().y() + 1) / 2;
             color outcol = (1 - yness) * color(1, 1, 1) + yness * color(0.6, 0.7, 1);
 
             world.intersects(r, hit);
             if (hit) {
                 outcol = color(hit.normal + vector(1, 1, 1)) / 2;
             }
+
+            // gamma correct outcol
+            // raise to 1 / gamma (1/2 in our case)
+
+            outcol = outcol.array().sqrt();
 
             colori col(outcol);
             // fprintf(outfile, "%i %i %i\n", 0, 0, 0);
