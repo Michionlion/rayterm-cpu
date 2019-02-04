@@ -3,7 +3,8 @@
 #include "sphere.h"
 
 TEST(Intersection, BoolEvaluation) {
-    intersection hit(true);
+    intersection hit;
+    hit.hit = true;
     if (hit) {
         SUCCEED();
     } else {
@@ -33,7 +34,7 @@ TEST(Intersection, BoolEvaluation) {
 }
 
 TEST(Intersection, SphereRayIntersectionPosition) {
-    intersection hit(false);
+    intersection hit;
     vector expected;
 
     hit      = sphere(vector(0, 0, 0), 2).intersects(ray(vector(0, 0, -3), vector(0, 0, 1)));
@@ -54,7 +55,7 @@ TEST(Intersection, SphereRayIntersectionPosition) {
 }
 
 TEST(Intersection, SphereRayIntersectionNormal) {
-    intersection hit(false);
+    intersection hit;
     vector expected;
 
     hit      = sphere(vector(0, 0, 0), 2).intersects(ray(vector(0, 0, -3), vector(0, 0, 1)));

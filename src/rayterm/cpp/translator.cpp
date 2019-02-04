@@ -1,5 +1,5 @@
-# include "terminal.h"
-# include "stdlib.h"
+#include <stdlib.h>
+#include "terminal.h"
 
 POINT* window_to_pixel(float x, float y, VECTOR* sizes) {
     POINT* n = (POINT*) malloc(sizeof(POINT));

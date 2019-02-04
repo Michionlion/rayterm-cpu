@@ -29,30 +29,44 @@ model {
             sources.cpp.lib library: 'eigen', linkage: 'api'
             sources.cpp.lib library: 'libigl', linkage: 'api'
         }
-        rayterm(NativeLibrarySpec) {
+        raytrace(NativeLibrarySpec) {
             sources.cpp.lib library: 'raymath', linkage: link_type
+            sources.cpp.lib library: 'eigen', linkage: 'api'
+            sources.cpp.lib library: 'libigl', linkage: 'api'
+        }
+        rayterm(NativeLibrarySpec) {
+            sources.cpp.lib library: 'raytrace', linkage: link_type
+            sources.cpp.lib library: 'eigen', linkage: 'api'
+            sources.cpp.lib library: 'libigl', linkage: 'api'
         }
         rtexplore(NativeExecutableSpec) {
             sources.cpp.lib library: "rayterm", linkage: link_type
+            sources.cpp.lib library: 'eigen', linkage: 'api'
+            sources.cpp.lib library: 'libigl', linkage: 'api'
         }
     }
     testSuites {
-        raytermTest(GoogleTestTestSuiteSpec) {
-            testing $.components.rayterm
-            sources.cpp.source.srcDir "src/rayterm/test"
-            sources.cpp.lib library: 'raymath', linkage: link_type
-        }
         raymathTest(GoogleTestTestSuiteSpec) {
             testing $.components.raymath
             sources.cpp.source.srcDir "src/raymath/test"
             sources.cpp.lib library: 'eigen', linkage: 'api'
             sources.cpp.lib library: 'libigl', linkage: 'api'
         }
+        raytraceTest(GoogleTestTestSuiteSpec) {
+            testing $.components.raytrace
+            sources.cpp.source.srcDir "src/raytrace/test"
+            sources.cpp.lib library: 'raymath', linkage: link_type
+        }
+        raytermTest(GoogleTestTestSuiteSpec) {
+            testing $.components.rayterm
+            sources.cpp.source.srcDir "src/rayterm/test"
+            sources.cpp.lib library: 'raytrace', linkage: link_type
+        }
     }
     binaries {
         all {
             linker.args "-lncurses"
-            cppCompiler.args "-std=c++11", "-msse4", "-Wall"
+            cppCompiler.args "-std=c++11", "-msse4", "-fPIC", "-Wall"
             if (buildType == buildTypes.debug) {
                 cppCompiler.args "-g"
             }

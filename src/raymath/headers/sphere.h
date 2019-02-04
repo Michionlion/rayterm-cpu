@@ -13,8 +13,10 @@ struct sphere : geometry {
 
     sphere(vector c, scalar r) : center(c), radius(r){};
 
-    intersection intersects(const ray r);
-    color colorize(const texcoord tc);
+    void intersects(ray r, intersection& record);
+    using geometry::intersects;
+
+    color colorize(texcoord tc);
 };
 
 #endif

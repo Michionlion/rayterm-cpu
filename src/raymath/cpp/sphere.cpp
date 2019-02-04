@@ -2,7 +2,7 @@
 #include "color.h"
 #include "intersection.h"
 
-intersection sphere::intersects(const ray r) {
+void sphere::intersects(ray r, intersection& record) {
     // Solves (ray_dir^2)t^2 +2(ray_dir dot (ray_origin - sphere_center))t
     // + (ray_origin - sphere_center)^2 - sphere_radius^2 = 0 for t
     // this is formula 6 in the rayterm proposal
@@ -14,13 +14,18 @@ intersection sphere::intersects(const ray r) {
 
     scalar discriminant = b * b - 4 * a * c;
 
-    if (discriminant < 0) {
-        return intersection(false);
-    } else {
-        scalar t   = (-b - sqrt(discriminant)) / (2.0 * a);
-        vector pos = r.pointAt(t);
-        return intersection(pos, (pos - center).normalized(), texcoord(0, 0));
+    if (discriminant >= 0) {
+        scalar t = (-b - sqrt(discriminant)) / (2.0 * a);
+        if (t > 0) {
+            record.hit      = true;
+            record.position = r.pointAt(t);
+            record.normal   = (record.position - center).normalized();
+            record.texture  = texcoord(0, 0);
+            return;
+        }
     }
+
+    record.hit = false;
 }
 
-color sphere::colorize(const texcoord tc) { return shade; }
+color sphere::colorize(texcoord tc) { return shade; }

@@ -6,8 +6,14 @@
 #include "types.h"
 
 struct geometry {
-    virtual intersection intersects(ray r) = 0;
-    virtual color colorize(texcoord tc)    = 0;
+    virtual color colorize(texcoord tc)                  = 0;
+    virtual void intersects(ray r, intersection& record) = 0;
+
+    intersection intersects(ray r) {
+        intersection hit;
+        this->intersects(r, hit);
+        return hit;
+    }
 };
 
 #endif
