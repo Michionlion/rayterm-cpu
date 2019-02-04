@@ -17,7 +17,13 @@ void sphere::intersects(ray r, intersection& record) {
     if (discriminant >= 0) {
         scalar t = (-b - sqrt(discriminant)) / (2.0 * a);
         if (t > 0) {
+            // FIXME: in the future, this could be put into a lambda (which captures r, center and
+            // texcoord stuff), and only evaluated once the caller used t to determine which
+            // intersection was the closest. This will probably only be efficient when most rays
+            // intersect at least a few things, otherwise there is no point to saving anything.
+
             record.hit      = true;
+            record.distance = t;
             record.position = r.pointAt(t);
             record.normal   = (record.position - center).normalized();
             record.texture  = texcoord(0, 0);

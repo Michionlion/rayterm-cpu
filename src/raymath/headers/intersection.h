@@ -8,10 +8,11 @@ struct intersection {
     vector position;
     vector normal;
     texcoord texture;
+    scalar distance;
 
     intersection() : hit(false){};
-    intersection(vector position, vector normal, texcoord texture)
-        : hit(true), position(position), normal(normal), texture(texture){};
+    intersection(vector position, vector normal, texcoord texture, scalar distance)
+        : hit(true), position(position), normal(normal), texture(texture), distance(distance){};
     operator bool() const { return hit; };
     bool operator!() const { return !hit; };
 };
