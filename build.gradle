@@ -66,10 +66,13 @@ model {
     binaries {
         all {
             linker.args "-lncurses"
-            cppCompiler.args "-std=c++11", "-msse4", "-fPIC", "-Wall"
+            cppCompiler.args "-std=c++11", "-msse4", "-Wall"
             if (buildType == buildTypes.debug) {
                 cppCompiler.args "-g"
             }
+        }
+        withType(NativeLibrarySpec) {
+            cppCompiler.args "-fPIC"
         }
         withType(GoogleTestTestSuiteBinarySpec) {
             lib library: "googleTest", linkage: "static"
