@@ -2,7 +2,7 @@
 #include "color.h"
 #include "intersection.h"
 
-#define MIN_CONTACT 0.001
+#define MIN_CONTACT 0.00001
 
 void sphere::intersects(ray r, intersection& record) {
     // Solves (ray_dir^2)t^2 +2(ray_dir dot (ray_origin - sphere_center))t
@@ -28,7 +28,6 @@ void sphere::intersects(ray r, intersection& record) {
             record.distance = t;
             record.position = r.pointAt(t);
             record.normal   = (record.position - center).normalized();
-            record.texture  = texcoord(0, 0);
             return;
         }
     }
@@ -36,4 +35,4 @@ void sphere::intersects(ray r, intersection& record) {
     record.hit = false;
 }
 
-color sphere::colorize(texcoord tc) { return shade; }
+texcoord sphere::compute_texcoord(const intersection& record) { return texcoord(0,0); }
