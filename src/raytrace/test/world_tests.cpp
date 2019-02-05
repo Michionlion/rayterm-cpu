@@ -24,7 +24,8 @@ TEST(World, CanIntersectGeometrys) {
     w.add_object(sphere3);
 
     ray r(vector(0, 0, 15), vector(0, 0, -1));
-    intersection hit = w.intersects(r);
+    intersection hit;
+    w.intersects(r, hit);
     vector expected(0, 0, 6);
     EXPECT_TRUE(hit) << "Failed to hit sphere2";
     EXPECT_TRUE(hit.position.isApprox(expected, 0.0001))

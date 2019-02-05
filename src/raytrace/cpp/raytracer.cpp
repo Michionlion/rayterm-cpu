@@ -4,9 +4,9 @@
 #include "raymath"
 #include "world.h"
 
-#define MAX_DEPTH 32
+#define MAX_DEPTH 128
 #define ABSORPTION 0.5
-#define SAMPLES_PER_PIXEL 1600
+#define SAMPLES_PER_PIXEL 8
 
 int raytrace_ppm(const char* filename) {
     FILE* outfile = fopen(filename, "w");
@@ -15,8 +15,10 @@ int raytrace_ppm(const char* filename) {
         return 1;
     }
 
-    int width  = 16 * 60;
-    int height = 9 * 60;
+    //int width  = 16 * 35;
+    //int height = 9 * 35;
+    int width = 80;
+    int height = 52;
 
     World world;
 
@@ -58,7 +60,7 @@ int raytrace_ppm(const char* filename) {
     return 0;
 }
 
-color trace(const ray& r, World& world, intersection& hit, int depth) {
+color trace(ray r, World& world, intersection& hit, int depth) {
     if (depth < MAX_DEPTH) {
         world.intersects(r, hit);
         if (hit) {
