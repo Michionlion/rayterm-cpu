@@ -3,5 +3,7 @@
 
 gradle checkRaytraceTestReleaseGoogleTestExe
 
-exec gthumb build/test-results/raytraceTest/release/test_image.ppm &> /dev/null &
-disown
+if [[ "$1" = "-o" ]]; then
+    exec gthumb build/test-results/raytraceTest/release/test_image.ppm &> /dev/null &
+    disown
+fi
