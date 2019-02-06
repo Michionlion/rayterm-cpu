@@ -6,7 +6,7 @@
 
 #define MAX_DEPTH 64
 #define ABSORPTION 0.5
-#define SAMPLES_PER_PIXE  128
+#define SAMPLES_PER_PIXEL 128
 
 int raytrace_ppm(const char* filename) {
     FILE* outfile = fopen(filename, "w");
@@ -22,9 +22,9 @@ int raytrace_ppm(const char* filename) {
 
     World world;
 
-    world.add_object(new sphere(vector(0, -301, -3), 300));
-    world.add_object(new sphere(vector(0, 0, -3), 1.25));
-    world.add_object(new sphere(vector(2, -0.25, -3), 0.75));
+    //world.add_object(new sphere(vector(0, -301, -3), 300));
+    //world.add_object(new sphere(vector(0, 0, -3), 1.25));
+    //world.add_object(new sphere(vector(2, -0.25, -3), 0.75));
 
     // world.add_object(new sphere(vector(0, -1, -3), 1));
     // world.add_object(new sphere(vector(0, 1, -2.5), 1.5));
