@@ -12,7 +12,9 @@ class WorldObject {
     World* world;
 
    public:
-    WorldObject(long id, Material* material, World* world) : id(id), material(material), world(world){};
+    WorldObject(long id, Material* material, World* world, geometry* first_geometry) : id(id), material(material), world(world){} {
+        add_geometry(first_geometry);
+    }
 
     void add_geometry(geometry* geom) { geometrys.push_back(std::unique_ptr<geometry>(geom)); }
 
@@ -20,5 +22,7 @@ class WorldObject {
 
     virtual color colorize(ray r, const intersection& record);
 };
+
+typedef std::list<std::unique_ptr<WorldObject>> worldobject_list;
 
 #endif
