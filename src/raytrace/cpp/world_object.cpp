@@ -16,8 +16,12 @@ void WorldObject::intersects(ray r, intersection& record) {
     }
 }
 
-color WorldObject::colorize(ray r, const intersection& record) {
+// colorize colors the given ray as if it hit at the given intersection, with the given trace depth
+color WorldObject::colorize(ray r, const intersection& record, int depth) {
+    ray scattered;
     color outcol(0, 0, 0);
-
+    if(depth < world->max_depth && material->scatter(r, scattered, record, outcol)) {
+        return outcol*world->trace(scattered, record, depth + 1);
+    }
     return outcol;
 }

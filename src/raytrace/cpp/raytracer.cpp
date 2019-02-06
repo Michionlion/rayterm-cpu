@@ -4,9 +4,9 @@
 #include "raymath"
 #include "world.h"
 
-#define MAX_DEPTH 128
+#define MAX_DEPTH 64
 #define ABSORPTION 0.5
-#define SAMPLES_PER_PIXEL 8
+#define SAMPLES_PER_PIXE  128
 
 int raytrace_ppm(const char* filename) {
     FILE* outfile = fopen(filename, "w");
@@ -15,10 +15,10 @@ int raytrace_ppm(const char* filename) {
         return 1;
     }
 
-    //int width  = 16 * 35;
-    //int height = 9 * 35;
-    int width = 80;
-    int height = 52;
+    int width  = 16 * 40;
+    int height = 9 * 40;
+    //int width = 80;
+    //int height = 52;
 
     World world;
 
