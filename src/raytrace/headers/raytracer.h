@@ -3,7 +3,9 @@
 #include "raymath"
 #include "world.h"
 
-int raytrace_ppm(const char* filename);
+typedef void (*progress_callback)(float);
+
+int raytrace_ppm(const char* filename, progress_callback cb = NULL);
 
 color trace(ray r, World& world, intersection& hit, int depth);
 

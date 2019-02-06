@@ -6,9 +6,9 @@
 
 #define MAX_DEPTH 32
 #define ABSORPTION 0.5
-#define SAMPLES_PER_PIXEL 8
+#define SAMPLES_PER_PIXEL 32
 
-int raytrace_ppm(const char* filename) {
+int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     FILE* outfile = fopen(filename, "w");
     if (outfile == NULL) {
         fprintf(stderr, "Error opening %s!\n", filename);
@@ -30,9 +30,9 @@ int raytrace_ppm(const char* filename) {
 
     // geometric shape declarations
     geometry* ground_sphere = new sphere(vector(0, -301, -3), 300);
-    geometry* sphere1 = new sphere(vector(0, 0, -3), 1.25);
-    geometry* sphere2 = new sphere(vector(2, -0.25, -3), 0.75);
-    geometry* sphere3 = new sphere(vector(-4, 0.25, -3), 1.5);
+    geometry* sphere1 = new sphere(vector(0, 0, -3), 1.0);
+    geometry* sphere2 = new sphere(vector(1.8, -0.25, -3), 0.75);
+    geometry* sphere3 = new sphere(vector(-2.75, 0.25, -3), 1.5);
 
     // world object addition and creation
     w.add_object(new WorldObject(0, ground, &w, ground_sphere));
@@ -44,6 +44,8 @@ int raytrace_ppm(const char* filename) {
 
     fprintf(outfile, "P3\n%i %i\n255\n", width, height);
     intersection hit;
+    float pixels = width * height;
+    int pixel = 0;
     for (int y = height - 1; y >= 0; y--) {
         for (int x = 0; x < width; x++) {
             color outcol(0, 0, 0);
@@ -58,14 +60,12 @@ int raytrace_ppm(const char* filename) {
             // raise to 1 / gamma (1/2 in our case)
 
             colori col((outcol / SAMPLES_PER_PIXEL).array().sqrt());
-            // fprintf(outfile, "%i %i %i\n", 0, 0, 0);
             fprintf(outfile, "%i %i %i\n", col.r, col.g, col.b);
-            // fprintf(outfile, "%i %i %i\n", int(yness * 255), int(yness * 255), int(yness * 255));
-            // fprintf(outfile, "%i %i %i\n", int((u + 1) / 2 * 255), int((u + 1) / 2 * 255),
-            //     int((u + 1) / 2 * 255));
+            if(cb != NULL) {
+                cb(pixel++ / pixels);
+            }
         }
     }
     fclose(outfile);
-
     return 0;
 }
