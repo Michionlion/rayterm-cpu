@@ -29,18 +29,27 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     Material* green = new Lambertian(color(0, 1, 0));
     Material* blue = new Lambertian(color(0, 0, 1));
     Material* ground = new Lambertian(color(0.3, 0.25, 0.4));
+    Material* metal = new Metal(color(0.6, 0.2, 0.3), 0.1);
+    Material* mirror = new Metal(color(0.25, 0.25, 0.25), 0.02);
+    Material* diffuse = new Metal(color(0.3, 0.5, 0.8), 1);
 
     // geometric shape declarations
     geometry* ground_sphere = new sphere(vector(0, -301, -3), 300);
     geometry* sphere1 = new sphere(vector(0, 0, -3), 1.0);
     geometry* sphere2 = new sphere(vector(1.8, -0.25, -3), 0.75);
     geometry* sphere3 = new sphere(vector(-2.75, 0.25, -3), 1.5);
+    geometry* metal4 = new sphere(vector(-0.5, -0.6, -1.75), 0.4);
+    geometry* mirror5 = new sphere(vector(104, 0, -3), 100);
+    geometry* diffuse6 = new sphere(vector(-1, 2, -12), 6);
 
     // world object addition and creation
     w.add_object(new WorldObject(0, ground, &w, ground_sphere));
     w.add_object(new WorldObject(1, red, &w, sphere1));
     w.add_object(new WorldObject(2, green, &w, sphere2));
     w.add_object(new WorldObject(3, blue, &w, sphere3));
+    w.add_object(new WorldObject(4, metal, &w, metal4));
+    w.add_object(new WorldObject(5, mirror, &w, mirror5));
+    w.add_object(new WorldObject(6, diffuse, &w, diffuse6));
 
     Camera* cam = new Camera(width, height, 78);
 
