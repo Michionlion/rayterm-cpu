@@ -2,6 +2,8 @@
 #include "color.h"
 #include "intersection.h"
 
+#define MIN_CONTACT 0.00001
+
 void sphere::intersects(ray r, intersection& record) {
     // Solves (ray_dir^2)t^2 +2(ray_dir dot (ray_origin - sphere_center))t
     // + (ray_origin - sphere_center)^2 - sphere_radius^2 = 0 for t
@@ -16,7 +18,7 @@ void sphere::intersects(ray r, intersection& record) {
 
     if (discriminant >= 0) {
         scalar t = (-b - sqrt(discriminant)) / (2.0 * a);
-        if (t > 0) {
+        if (t > MIN_CONTACT) {
             // FIXME: in the future, this could be put into a lambda (which captures r, center and
             // texcoord stuff), and only evaluated once the caller used t to determine which
             // intersection was the closest. This will probably only be efficient when most rays
@@ -26,7 +28,6 @@ void sphere::intersects(ray r, intersection& record) {
             record.distance = t;
             record.position = r.pointAt(t);
             record.normal   = (record.position - center).normalized();
-            record.texture  = texcoord(0, 0);
             return;
         }
     }
@@ -34,4 +35,4 @@ void sphere::intersects(ray r, intersection& record) {
     record.hit = false;
 }
 
-color sphere::colorize(texcoord tc) { return shade; }
+texcoord sphere::compute_texcoord(const intersection& record) { return texcoord(0,0); }

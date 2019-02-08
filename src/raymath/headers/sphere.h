@@ -9,14 +9,12 @@
 struct sphere : geometry {
     vector center;
     scalar radius;
-    color shade = color(0, 1, 0);
 
     sphere(vector c, scalar r) : center(c), radius(r){};
 
     void intersects(ray r, intersection& record);
     using geometry::intersects;
-
-    color colorize(texcoord tc);
+    texcoord compute_texcoord(const intersection& record);
 };
 
 #endif

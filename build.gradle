@@ -73,6 +73,8 @@ model {
             cppCompiler.args "-std=c++11", "-msse4", "-fPIC", "-Wall"
             if (buildType == buildTypes.debug) {
                 cppCompiler.args "-g"
+            } else if(buildType == buildTypes.release) {
+                cppCompiler.args "-O3", "-funroll-loops", "-march=native", "-mfpmath=sse"
             }
         }
         withType(GoogleTestTestSuiteBinarySpec) {
