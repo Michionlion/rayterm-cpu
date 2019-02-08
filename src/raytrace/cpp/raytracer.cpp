@@ -4,9 +4,13 @@
 #include "raymath"
 #include "world.h"
 
-#define MAX_DEPTH 32
-#define ABSORPTION 0.5
-#define SAMPLES_PER_PIXEL 32
+#ifndef SAMPLES
+#define SAMPLES 32
+#endif
+
+#ifndef RES_MULT
+#define RES_MULT 1.0
+#endif
 
 int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     FILE* outfile = fopen(filename, "w");
@@ -15,10 +19,8 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
         return 1;
     }
 
-    int width  = 16 * 20;
-    int height = 9 * 20;
-    //int width = 80;
-    //int height = 52;
+    int width = int(80 * RES_MULT);
+    int height = int(52 * RES_MULT);
 
     World w;
 
@@ -49,7 +51,7 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     for (int y = height - 1; y >= 0; y--) {
         for (int x = 0; x < width; x++) {
             color outcol(0, 0, 0);
-            for (int sample = 0; sample < SAMPLES_PER_PIXEL; sample++) {
+            for (int sample = 0; sample < SAMPLES; sample++) {
                 scalar u = 2 * ((scalar(x) + random_scalar()) / scalar(width)) - 1;
                 scalar v = 2 * ((scalar(y) + random_scalar()) / scalar(height)) - 1;
                 ray r    = cam->get_screen_ray(u, v);
@@ -59,7 +61,7 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
             // gamma correct outcol
             // raise to 1 / gamma (1/2 in our case)
 
-            colori col((outcol / SAMPLES_PER_PIXEL).array().sqrt());
+            colori col((outcol / SAMPLES).array().sqrt());
             fprintf(outfile, "%i %i %i\n", col.r, col.g, col.b);
             if(cb != NULL) {
                 cb(pixel++ / pixels);
