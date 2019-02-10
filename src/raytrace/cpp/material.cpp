@@ -4,7 +4,16 @@ vector reflect(const vector& in, const vector& normal) {
     return vector(in - 2 * in.dot(normal) * normal);
 }
 
-vector refract(const vector& in, const vector& normal) { return vector(0, 0, 0); }
+bool refract(const vector& in, const vector& normal, scalar ni_div_nt, vector& refracted) {
+    vector norm_in = in.normalized();
+    scalar dt      = norm_in.dot(normal);
+    scalar discrim = 1.0 - ni_div_nt * ni_div_nt * (1 - dt * dt);
+    if (discrim > 0) {
+        refracted = ni_div_nt * (norm_in - normal * dt) - normal * sqrt(discrim);
+        return true;
+    }
+    return false;
+}
 
 bool Lambertian::scatter(
     const ray& incoming, ray& outgoing, const intersection& hit, color& attenuation) const {
