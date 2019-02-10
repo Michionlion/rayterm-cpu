@@ -13,9 +13,9 @@ class Camera {
 
    public:
     Camera(int width, int height, scalar fov) : width(width), height(height), fov(fov) {
-        origin          = vector(0, 0, 0);
-        aspect_ratio    = scalar(width) / scalar(height);
-        fov_height_len  = tan((fov / 2 * M_PI / 180));
+        origin         = vector(0, 0, 0);
+        aspect_ratio   = scalar(width) / scalar(height);
+        fov_height_len = tan((fov / 2 * M_PI / 180));
     }
 
     // get the ray originating from the camera going through screen coordinate (u, v)

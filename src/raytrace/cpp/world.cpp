@@ -10,7 +10,7 @@ WorldObjectPtr* World::intersects(ray r, intersection& record) {
         if (hit && hit.distance < closest_t) {
             record    = hit;
             closest_t = record.distance;
-            obj_hit = &(*it);
+            obj_hit   = &(*it);
         }
     }
     return obj_hit;

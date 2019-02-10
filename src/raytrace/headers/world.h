@@ -1,8 +1,8 @@
 #ifndef _RAYTERM_WORLD_H_
 #define _RAYTERM_WORLD_H_
 #include <memory>
-#include "raymath"
 #include "material.h"
+#include "raymath"
 
 #define MAXDEPTH 32
 
@@ -28,7 +28,6 @@ class World {
     color trace(ray r, intersection& record, int depth);
 };
 
-
 // WorldObject joins geometry (possibly more than one) to a colorize function.
 // This enables the use of materials, shading, and more.
 class WorldObject {
@@ -38,7 +37,8 @@ class WorldObject {
     World* world;
 
    public:
-    WorldObject(long id, Material* material, World* world, geometry* first_geometry) : id(id), material(material), world(world) {
+    WorldObject(long id, Material* material, World* world, geometry* first_geometry)
+        : id(id), material(material), world(world) {
         add_geometry(first_geometry);
     }
 
