@@ -33,6 +33,16 @@ TEST(Intersection, BoolEvaluation) {
     }
 }
 
+TEST(Intersection, SphereRayIntersectionBehind) {
+    intersection hit;
+
+    hit = sphere(vector(0, 0, 0), 2).intersects(ray(vector(0, 0, -3), vector(0, 0, -1)));
+    EXPECT_FALSE(hit);
+
+    hit = sphere(vector(0, 3, 0), 2).intersects(ray(vector(0, 0, -3), vector(0, -1, -0.5)));
+    EXPECT_FALSE(hit);
+}
+
 TEST(Intersection, SphereRayIntersectionPosition) {
     intersection hit;
     vector expected;
