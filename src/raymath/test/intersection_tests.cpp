@@ -49,6 +49,7 @@ TEST(Intersection, SphereRayIntersectionPosition) {
 
     hit      = sphere(vector(0, 0, 0), 2).intersects(ray(vector(0, 0, -3), vector(0, 0, 1)));
     expected = vector(0, 0, -2);
+    EXPECT_TRUE(hit);
     EXPECT_TRUE(hit.position.isApprox(expected, 0.0001))
         << "  Actual: "
         << "{" << hit.position[0] << ", " << hit.position[1] << ", " << hit.position[2] << "}"
@@ -57,6 +58,7 @@ TEST(Intersection, SphereRayIntersectionPosition) {
 
     hit      = sphere(vector(0, 3, 0), 2).intersects(ray(vector(0, 0, -3), vector(0, 1, 0.5)));
     expected = vector(0, 2.27335, -1.863325);
+    EXPECT_TRUE(hit);
     EXPECT_TRUE(hit.position.isApprox(expected, 0.0001))
         << "  Actual: "
         << "{" << hit.position[0] << ", " << hit.position[1] << ", " << hit.position[2] << "}"
@@ -70,6 +72,7 @@ TEST(Intersection, SphereRayIntersectionNormal) {
 
     hit      = sphere(vector(0, 0, 0), 2).intersects(ray(vector(0, 0, -3), vector(0, 0, 1)));
     expected = vector(0, 0, -1);
+    EXPECT_TRUE(hit);
     EXPECT_TRUE(hit.normal.isApprox(expected, 0.0001))
         << "  Actual: "
         << "{" << hit.normal[0] << ", " << hit.normal[1] << ", " << hit.normal[2] << "}"
@@ -78,6 +81,7 @@ TEST(Intersection, SphereRayIntersectionNormal) {
 
     hit      = sphere(vector(0, 3, 0), 2).intersects(ray(vector(0, 0, -3), vector(0, 1, 0.5)));
     expected = vector(0, -0.363325, -0.931662);
+    EXPECT_TRUE(hit);
     EXPECT_TRUE(hit.normal.isApprox(expected, 0.0001))
         << "  Actual: "
         << "{" << hit.normal[0] << ", " << hit.normal[1] << ", " << hit.normal[2] << "}"
