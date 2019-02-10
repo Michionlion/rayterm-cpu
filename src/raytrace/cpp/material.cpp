@@ -64,24 +64,23 @@ bool Metal::scatter(
 
 bool Dielectric::scatter(
     const ray& incoming, ray& outgoing, const intersection& hit, color& attenuation) const {
-    vector out_normal;
-    vector reflected = reflect(incoming.direction(), hit.normal);
-    scalar ni_div_nt;
-    attenuation = albedo;
+    attenuation = color(1, 1, 1);  // does not currently support attenuation
     vector refracted;
-    if (incoming.direction().dot(hit.normal) > 0) {
-        out_normal = -hit.normal;
-        ni_div_nt  = refrac_index;
+    scalar reflect_probability;
+    scalar cos = incoming.direction().dot(hit.normal);
+
+    if (refract(incoming.direction(), hit.normal, cos, refrac_index, refracted)) {
+        reflect_probability = schlick(cos, refrac_index);
     } else {
-        out_normal = hit.normal;
-        ni_div_nt  = 1.0 / refrac_index;
+        outgoing = ray(hit.position, reflect(incoming.direction(), hit.normal));
+        return true;
     }
 
-    if (refract(incoming.direction(), out_normal, ni_div_nt, refracted)) {
-        outgoing = ray(hit.position, refracted);
+    if (random_scalar() < reflect_probability) {
+        outgoing = ray(hit.position, reflect(incoming.direction(), hit.normal));
     } else {
-        outgoing = ray(hit.position, reflected);
-        return false;
+        outgoing = ray(hit.position, refracted);
     }
+
     return true;
 }
