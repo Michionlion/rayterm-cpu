@@ -20,11 +20,11 @@ void sphere::intersects(ray r, intersection& record) {
     if (discriminant >= 0) {
         // check both roots -- get smallest non-negative
         scalar sqrt_discrim = sqrt(discriminant);
-        scalar t            = -b - sqrt_discrim;
-        if (t < MIN_CONTACT) {
-            t = -b + sqrt_discrim;
+        scalar inv_denom    = 1 / (2 * a);
+        scalar t            = (-b - sqrt_discrim) * inv_denom;
+        if (t < -MIN_CONTACT) {
+            t = (-b + sqrt_discrim) * inv_denom;
         }
-        t /= (2.0 * a);
         if (t > MIN_CONTACT) {
             // FIXME: in the future, this could be put into a lambda (which captures r, center and
             // texcoord stuff), and only evaluated once the caller used t to determine which
