@@ -25,5 +25,5 @@ color World::trace(ray r, intersection& record, int depth) {
     }
 
     scalar yness = (r.direction().normalized().y() + 1) / 2;
-    return (1 - yness) * color(1, 1, 1) + yness * color(0.5, 0.7, 1);
+    return (1 - yness) * color(1, 1, 1) + yness * color(0.3, 0.5, 1);
 }
