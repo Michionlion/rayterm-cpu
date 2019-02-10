@@ -11,7 +11,8 @@ void sphere::intersects(ray r, intersection& record) {
 
     scalar a = r.direction().dot(r.direction());
     vector i = r.origin() - center;
-    scalar b = 2 * r.direction().dot(i);
+    // scalar b = 2 * r.direction().dot(i);
+    scalar b = 2 * i.dot(r.direction());
     scalar c = i.dot(i) - radius * radius;
 
     scalar discriminant = b * b - 4 * a * c;
