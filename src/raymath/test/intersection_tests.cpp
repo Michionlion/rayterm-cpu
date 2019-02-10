@@ -88,3 +88,41 @@ TEST(Intersection, SphereRayIntersectionNormal) {
         << "\nExpected: "
         << "{" << expected[0] << ", " << expected[1] << ", " << expected[2] << "}";
 }
+
+TEST(Intersection, SphereRayIntersectionInternal) {
+    intersection hit;
+
+    hit = sphere(vector(0, 0, 0), 2).intersects(ray(vector(0, 0, 1), vector(0, 0, 1)));
+    vector expected_normal   = vector(0, 0, 1);
+    vector expected_position = vector(0, 0, 2);
+    EXPECT_TRUE(hit);
+    EXPECT_TRUE(hit.position.isApprox(expected_position, 0.0001))
+        << "  Actual: "
+        << "{" << hit.position[0] << ", " << hit.position[1] << ", " << hit.position[2] << "}"
+        << "\nExpected: "
+        << "{" << expected_position[0] << ", " << expected_position[1] << ", "
+        << expected_position[2] << "}";
+    EXPECT_TRUE(hit.normal.isApprox(expected_normal, 0.0001))
+        << "  Actual: "
+        << "{" << hit.normal[0] << ", " << hit.normal[1] << ", " << hit.normal[2] << "}"
+        << "\nExpected: "
+        << "{" << expected_normal[0] << ", " << expected_normal[1] << ", " << expected_normal[2]
+        << "}";
+
+    hit = sphere(vector(0, 3, 0), 2).intersects(ray(vector(0, 3, 1), vector(0, 1, 1.5)));
+    expected_normal   = vector(0, 0.302169, 0.953254);
+    expected_position = vector(0, 3.604339, 1.906508);
+    EXPECT_TRUE(hit);
+    EXPECT_TRUE(hit.position.isApprox(expected_position, 0.0001))
+        << "  Actual: "
+        << "{" << hit.position[0] << ", " << hit.position[1] << ", " << hit.position[2] << "}"
+        << "\nExpected: "
+        << "{" << expected_position[0] << ", " << expected_position[1] << ", "
+        << expected_position[2] << "}";
+    EXPECT_TRUE(hit.normal.isApprox(expected_normal, 0.0001))
+        << "  Actual: "
+        << "{" << hit.normal[0] << ", " << hit.normal[1] << ", " << hit.normal[2] << "}"
+        << "\nExpected: "
+        << "{" << expected_normal[0] << ", " << expected_normal[1] << ", " << expected_normal[2]
+        << "}";
+}
