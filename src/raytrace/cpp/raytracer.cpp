@@ -45,7 +45,7 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     geometry* sphere7  = new sphere(vector(1, 0, -1), 0.5);
     geometry* sphere8  = new sphere(vector(0, 0, -1), 0.5);
     geometry* sphere9  = new sphere(vector(-1, 0, -1), 0.5);
-    geometry* sphere10 = new sphere(vector(-1, 0, -1), -0.475);
+    geometry* sphere10 = new sphere(vector(-1, 0, -1), -0.45);
 
     // geometry* sphere7 = new sphere(vector(0.75, 0, -1.5), 0.5);
     // geometry* sphere8 = new sphere(vector(-0.75, 0, -1.5), 0.5);
