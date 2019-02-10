@@ -35,4 +35,4 @@ void sphere::intersects(ray r, intersection& record) {
     record.hit = false;
 }
 
-texcoord sphere::compute_texcoord(const intersection& record) { return texcoord(0,0); }
+texcoord sphere::compute_texcoord(const intersection& record) { return texcoord(0, 0); }
