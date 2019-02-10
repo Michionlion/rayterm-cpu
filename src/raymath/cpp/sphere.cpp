@@ -22,7 +22,7 @@ void sphere::intersects(ray r, intersection& record) {
         scalar sqrt_discrim = sqrt(discriminant);
         scalar inv_denom    = 1 / (2 * a);
         scalar t            = (-b - sqrt_discrim) * inv_denom;
-        if (t < -MIN_CONTACT) {
+        if (t < MIN_CONTACT) {
             t = (-b + sqrt_discrim) * inv_denom;
         }
         if (t > MIN_CONTACT) {
