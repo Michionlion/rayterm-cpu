@@ -17,7 +17,13 @@ void sphere::intersects(ray r, intersection& record) {
     scalar discriminant = b * b - 4 * a * c;
 
     if (discriminant >= 0) {
-        scalar t = (-b - sqrt(discriminant)) / (2.0 * a);
+        // check both roots -- get smallest non-negative
+        scalar sqrt_discrim = sqrt(discriminant);
+        scalar t            = -b - sqrt_discrim;
+        if (t < MIN_CONTACT) {
+            t = -b + sqrt_discrim;
+        }
+        t /= (2.0 * a);
         if (t > MIN_CONTACT) {
             // FIXME: in the future, this could be put into a lambda (which captures r, center and
             // texcoord stuff), and only evaluated once the caller used t to determine which
