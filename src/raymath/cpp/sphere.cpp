@@ -34,7 +34,7 @@ void sphere::intersects(ray r, intersection& record) {
             record.hit      = true;
             record.distance = t;
             record.position = r.pointAt(t);
-            record.normal   = (record.position - center).normalized();
+            record.normal   = (record.position - center) / radius;
             return;
         }
     }
