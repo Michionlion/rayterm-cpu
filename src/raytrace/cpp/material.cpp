@@ -1,15 +1,40 @@
 #include "material.h"
+#include <cmath>
 
 vector reflect(const vector& in, const vector& normal) {
     return vector(in - 2 * in.dot(normal) * normal);
 }
 
-bool refract(const vector& in, const vector& normal, scalar ni_div_nt, vector& refracted) {
-    vector norm_in = in.normalized();
-    scalar dt      = norm_in.dot(normal);
-    scalar discrim = 1.0 - ni_div_nt * ni_div_nt * (1 - dt * dt);
+// refract generates a refraction vector, using in as the normalized incoming direction,
+// surface_normal as the normal (away from surface, towards air), cos as the dot product of the
+// surface normal and incoming ray, and ior as the refractive index. The generated ray is stored in
+// refracted. If the vector cannot be refracted, false is returned.
+//
+// This function also modifies cos to be the correct positive cosine, if needed.
+bool refract(
+    const vector& in, const vector& surface_normal, scalar& cos, scalar ior, vector& refracted) {
+    scalar from_ior = 1;
+    vector normal;
+
+    // handle coming from inside vs outside
+    if (cos < 0) {
+        // hitting the object from the outside (air to object)
+        cos    = -cos;
+        normal = surface_normal;
+    } else {
+        // hitting the object from the inside (object to air)
+        from_ior = ior;
+        ior      = 1;
+        normal   = -surface_normal;
+    }
+    scalar from_over_to_ior = from_ior / ior;
+    scalar discrim          = 1 - from_over_to_ior * from_over_to_ior * (1 - cos * cos);
     if (discrim > 0) {
-        refracted = ni_div_nt * (norm_in - normal * dt) - normal * sqrt(discrim);
+        refracted = (from_over_to_ior * in) + (from_over_to_ior * cos - sqrt(discrim)) * normal;
+        // multiple sources differ on the correct implementation. The above uses the second option
+        // here, which is from Scratchapixel. The first is from Ray-Tracing in a Weekend.
+        // refracted = from_over_to_ior * (in - normal * cos) - normal * sqrt(discrim);
+        // refracted = from_over_to_ior * (in + normal * cos) - normal * sqrt(discrim);
         return true;
     }
     return false;
