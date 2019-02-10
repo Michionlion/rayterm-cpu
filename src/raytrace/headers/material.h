@@ -33,9 +33,10 @@ class Metal : public Material {
 
 class Dielectric : public Material {
     color albedo;
+    scalar refrac_index;
 
    public:
-    Dielectric() : albedo(color(1, 1, 0)){};
+    Dielectric(scalar refrac_index) : albedo(color(1, 1, 1)), refrac_index(refrac_index){};
     bool scatter(
         const ray& incoming, ray& outgoing, const intersection& hit, color& attenuation) const;
 };
