@@ -15,6 +15,12 @@ bool refract(const vector& in, const vector& normal, scalar ni_div_nt, vector& r
     return false;
 }
 
+scalar schlick(scalar cos, scalar refrac_index) {
+    scalar r0 = (1 - refrac_index) / (1 + refrac_index);
+    r0 *= r0;
+    return r0 + (1 - r0) * pow((1 - cos), 5);
+}
+
 bool Lambertian::scatter(
     const ray& incoming, ray& outgoing, const intersection& hit, color& attenuation) const {
     vector bounce(hit.position + hit.normal + random_in_usphere());
