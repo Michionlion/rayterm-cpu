@@ -42,9 +42,14 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     // geometry* mirror5       = new sphere(vector(104, 0, -3), 100);
     // geometry* diffuse6      = new sphere(vector(-1, 2, -12), 6);
 
-    geometry* sphere7 = new sphere(vector(1, 0, -1), 0.5);
-    geometry* sphere8 = new sphere(vector(0, 0, -1), 0.5);
-    geometry* sphere9 = new sphere(vector(-1, 0, -1), 0.5);
+    geometry* sphere7  = new sphere(vector(1, 0, -1), 0.5);
+    geometry* sphere8  = new sphere(vector(0, 0, -1), 0.5);
+    geometry* sphere9  = new sphere(vector(-1, 0, -1), 0.5);
+    geometry* sphere10 = new sphere(vector(-1, 0, -1), -0.4);
+
+    // geometry* sphere7 = new sphere(vector(0.75, 0, -1.5), 0.5);
+    // geometry* sphere8 = new sphere(vector(-0.75, 0, -1.5), 0.5);
+    // geometry* sphere9 = new sphere(vector(0, 0, -0.8), 0.5);
 
     // // world object addition and creation
     w.add_object(new WorldObject(0, ground, &w, ground_sphere));
@@ -55,9 +60,11 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     // w.add_object(new WorldObject(5, mirror, &w, mirror5));
     // w.add_object(new WorldObject(6, diffuse, &w, diffuse6));
 
-    w.add_object(new WorldObject(7, new Metal(color(0.8, 0.6, 0.2), 1.0), &w, sphere7));
+    // w.add_object(new WorldObject(7, new Metal(color(0.8, 0.6, 0.2), 0.6), &w, sphere7));
+    w.add_object(new WorldObject(7, new Metal(color(0.65, 0.65, 0.7), 0.02), &w, sphere7));
     w.add_object(new WorldObject(8, new Lambertian(color(0.1, 0.2, 0.5)), &w, sphere8));
     w.add_object(new WorldObject(9, new Dielectric(1.5), &w, sphere9));
+    w.add_object(new WorldObject(10, new Dielectric(1.5), &w, sphere10));
 
     Camera* cam = new Camera(width, height, 90);
 
