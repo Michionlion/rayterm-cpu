@@ -41,7 +41,7 @@ void sphere::intersects(ray r, intersection& record) {
             record.normal   = (record.position - center) / radius;
 
             if (dropped) {
-                fprintf(stderr, "dropped with t = %lf, old t = %lf\n", t, ot);
+                // fprintf(stderr, "dropped with t = %lf, old t = %lf\n", t, ot);
             }
             return;
         }
