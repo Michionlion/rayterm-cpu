@@ -78,6 +78,9 @@ model {
                 def mult = project.getProperty('RES_MULT')
                 cppCompiler.args "-DRES_MULT=${mult}"
             }
+            if(project.hasProperty('NO_PROGRESS')) {
+                cppCompiler.args "-DNO_PROGRESS"
+            }
             cppCompiler.args "-std=c++11", "-msse4", "-fPIC", "-Wall"
             if (buildType == buildTypes.debug) {
                 cppCompiler.args "-g"

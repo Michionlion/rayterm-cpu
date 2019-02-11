@@ -9,7 +9,7 @@ while [ $# -gt 0 ]; do
     case $1 in
         -r|--res|--resolution|--multi)
             if [ $# -gt 1 ]; then
-                FLAGS="$FLAGS -PRES_MULT=$2"
+                FLAGS="$FLAGS-PRES_MULT=$2 "
                 shift
             else
                 echo -e "\033[91mNo value specified after $1!'\033[0m"
@@ -17,7 +17,7 @@ while [ $# -gt 0 ]; do
         ;;
         -s|--samples)
             if [ $# -gt 1 ]; then
-                FLAGS="$FLAGS -PSAMPLES=$2"
+                FLAGS="$FLAGS-PSAMPLES=$2 "
                 shift
             else
                 echo -e "\033[91mNo integer value specified after $1!'\033[0m"
@@ -25,6 +25,9 @@ while [ $# -gt 0 ]; do
         ;;
         -o|--open)
             OPEN=true
+        ;;
+        -np|--no-progress)
+            FLAGS="$FLAGS-PNO_PROGRESS "
         ;;
         *)
             echo -e "\033[2;91mUnrecognized flag '$1!'\033[0m"

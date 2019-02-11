@@ -3,7 +3,11 @@
 #include <cstdio>
 #include "raytracer.h"
 
-void progress_cb(float progress) { printf("\b\b\b%02d%%", int(progress * 100)); }
+void progress_cb(float progress) {
+#ifndef NO_PROGRESS
+    printf("\b\b\b%02d%%", int(progress * 100));
+#endif
+}
 
 TEST(RaytracerTest, Success) {
     printf("00%%");
