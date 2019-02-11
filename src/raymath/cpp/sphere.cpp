@@ -1,4 +1,5 @@
 #include "sphere.h"
+#include <cstdio>
 #include "color.h"
 #include "intersection.h"
 
@@ -21,8 +22,12 @@ void sphere::intersects(ray r, intersection& record) {
         scalar sqrt_discrim = sqrt(discriminant);
         scalar inv_denom    = 1 / a;
         scalar t            = (-b - sqrt_discrim) * inv_denom;
-        if (t <= MIN_CONTACT) {
-            t = (-b + sqrt_discrim) * inv_denom;
+        bool dropped        = false;
+        scalar ot;
+        if (t < MIN_CONTACT) {
+            ot      = t;
+            t       = (-b + sqrt_discrim) * inv_denom;
+            dropped = true;
         }
         if (t > MIN_CONTACT) {
             // FIXME: in the future, this could be put into a lambda (which captures r, center and
@@ -34,6 +39,10 @@ void sphere::intersects(ray r, intersection& record) {
             record.distance = t;
             record.position = r.pointAt(t);
             record.normal   = (record.position - center) / radius;
+
+            if (dropped) {
+                fprintf(stderr, "dropped with t = %lf, old t = %lf\n", t, ot);
+            }
             return;
         }
     }
