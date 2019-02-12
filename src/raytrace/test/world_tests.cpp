@@ -4,9 +4,9 @@
 
 TEST(World, CanAddGeometrys) {
     World w;
-    Material* red = new Lambertian(color(1, 0, 0));
-    Material* green = new Lambertian(color(0, 1, 0));
-    Material* blue = new Lambertian(color(0, 0, 1));
+    Material* red     = new Lambertian(color(1, 0, 0));
+    Material* green   = new Lambertian(color(0, 1, 0));
+    Material* blue    = new Lambertian(color(0, 0, 1));
     geometry* sphere1 = new sphere(vector(0, 0, 0), 2);
     geometry* sphere2 = new sphere(vector(0, 0, 2), 4);
     geometry* sphere3 = new sphere(vector(0, 0, 0), 5);
@@ -17,9 +17,9 @@ TEST(World, CanAddGeometrys) {
 
 TEST(World, CanIntersectGeometrys) {
     World w;
-    Material* red = new Lambertian(color(1, 0, 0));
-    Material* green = new Lambertian(color(0, 1, 0));
-    Material* blue = new Lambertian(color(0, 0, 1));
+    Material* red     = new Lambertian(color(1, 0, 0));
+    Material* green   = new Lambertian(color(0, 1, 0));
+    Material* blue    = new Lambertian(color(0, 0, 1));
     geometry* sphere1 = new sphere(vector(0, 0, 0), 2);
     geometry* sphere2 = new sphere(vector(0, 0, 2), 4);
     geometry* sphere3 = new sphere(vector(0, 0, 0), 5);

@@ -1,4 +1,5 @@
 #include "sphere.h"
+#include <cstdio>
 #include "color.h"
 #include "intersection.h"
 
@@ -11,13 +12,23 @@ void sphere::intersects(ray r, intersection& record) {
 
     scalar a = r.direction().dot(r.direction());
     vector i = r.origin() - center;
-    scalar b = 2 * r.direction().dot(i);
+    scalar b = i.dot(r.direction());
     scalar c = i.dot(i) - radius * radius;
 
-    scalar discriminant = b * b - 4 * a * c;
+    scalar discriminant = b * b - a * c;
 
-    if (discriminant >= 0) {
-        scalar t = (-b - sqrt(discriminant)) / (2.0 * a);
+    if (discriminant > 0) {
+        // check both roots -- get smallest non-negative
+        scalar sqrt_discrim = sqrt(discriminant);
+        scalar inv_denom    = 1 / a;
+        scalar t            = (-b - sqrt_discrim) * inv_denom;
+        bool dropped        = false;
+        scalar ot;
+        if (t < MIN_CONTACT) {
+            ot      = t;
+            t       = (-b + sqrt_discrim) * inv_denom;
+            dropped = true;
+        }
         if (t > MIN_CONTACT) {
             // FIXME: in the future, this could be put into a lambda (which captures r, center and
             // texcoord stuff), and only evaluated once the caller used t to determine which
@@ -27,7 +38,11 @@ void sphere::intersects(ray r, intersection& record) {
             record.hit      = true;
             record.distance = t;
             record.position = r.pointAt(t);
-            record.normal   = (record.position - center).normalized();
+            record.normal   = (record.position - center) / radius;
+
+            if (dropped) {
+                // fprintf(stderr, "dropped with t = %lf, old t = %lf\n", t, ot);
+            }
             return;
         }
     }
@@ -35,4 +50,4 @@ void sphere::intersects(ray r, intersection& record) {
     record.hit = false;
 }
 
-texcoord sphere::compute_texcoord(const intersection& record) { return texcoord(0,0); }
+texcoord sphere::compute_texcoord(const intersection& record) { return texcoord(0, 0); }
