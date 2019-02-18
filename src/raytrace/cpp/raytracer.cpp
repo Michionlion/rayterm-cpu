@@ -69,6 +69,7 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     //w.add_object(new WorldObject(10, new Dielectric(1.5), &w, sphere1));
 
     Camera* cam = new Camera(width, height, 90);
+    cam->look(vector(0, 0.4, -1));
 
     fprintf(outfile, "P3\n%i %i\n255\n", width, height);
     intersection hit;
