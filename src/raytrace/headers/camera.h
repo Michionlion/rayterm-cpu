@@ -11,7 +11,9 @@ class Camera {
     scalar vertical_fov;
     scalar fov_height_len;
 
-    Eigen::Matrix<scalar, 4, 4> camera_to_world;
+    vector look_target;
+    vector origin;
+    Eigen::Matrix<scalar, 3, 3> camera_to_world;
 
    public:
     Camera(int width, int height, scalar vertical_fov) : width(width), height(height), vertical_fov(vertical_fov) {
@@ -19,20 +21,25 @@ class Camera {
         fov_height_len = tan((vertical_fov / 2 * M_PI / 180));
         position(vector(0, 0, 0));
         look(vector(0, 0, -1));
-        camera_to_world(0, 3) = 0;
-        camera_to_world(1, 3) = 0;
-        camera_to_world(2, 3) = 0;
-        camera_to_world(3, 3) = 1;
     }
 
     void position(vector new_origin) {
-        camera_to_world(3, 0) = new_origin.x();
-        camera_to_world(3, 1) = new_origin.y();
-        camera_to_world(3, 2) = new_origin.z();
+        origin = new_origin;
+        update_camera_matrix();
     }
 
-    void look(vector look_target) {
-        vector origin = vector(camera_to_world(3, 0), camera_to_world(3, 1), camera_to_world(3, 2));
+    void look(vector target) {
+        look_target = target;
+        update_camera_matrix();
+    }
+
+    void position_look(vector origin, vector look_target) {
+        this->origin = origin;
+        this->look_target = look_target;
+        update_camera_matrix();
+    }
+
+    void update_camera_matrix() {
         vector wup = vector(0, 1, 0); // must be normalized
         vector forward = (origin - look_target).normalized();
         vector right = wup.cross(forward);
@@ -59,12 +66,11 @@ class Camera {
     }
 
     vector toWorldDir(vector direction) {
-        return camera_to_world.block<3, 3>(0, 0) * direction;
+        return camera_to_world * direction;
     }
 
     vector toWorldPos(vector position) {
-       Eigen::Vector4d vec4(position.x(), position.y(), position.z(), 1);
-       return (camera_to_world * vec4).head<3>();
+       return origin + position;
     }
 };
 
