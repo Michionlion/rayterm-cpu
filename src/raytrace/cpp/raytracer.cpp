@@ -35,12 +35,13 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     Material* glass   = new Dielectric(1.5);
 
     // geometric shape declarations
+    geometry* pointer       = new sphere(vector(0, 0, 0), 0.1);
     geometry* ground_sphere = new sphere(vector(0, -1001, -2), 1000);
     geometry* sphere1       = new sphere(vector(0, 0, -3), 1.0);
     geometry* sphere2       = new sphere(vector(2.0, -0.25, -3), 0.75);
     geometry* sphere3       = new sphere(vector(-2.75, 0.25, -3), 1.5);
     geometry* metal4        = new sphere(vector(-0.5, -0.5, -1.5), 0.5);
-    geometry* mirror5       = new sphere(vector(105, 0, -3), 100);
+    geometry* mirror5       = new sphere(vector(15, 0, -3), 10);
     geometry* diffuse6      = new sphere(vector(-1, 2, -12), 6);
 
     geometry* sphere7  = new sphere(vector(1, 0, -1.25), 0.5);
@@ -62,14 +63,15 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     w.add_object(new WorldObject(5, diffuse, &w, mirror5));
     w.add_object(new WorldObject(6, blue, &w, diffuse6));
 
+    w.add_object(new WorldObject(11, new Lambertian(color(0, 0, 0)), &w, pointer));
+
     // w.add_object(new WorldObject(7, new Metal(color(0.8, 0.6, 0.2), 0.6), &w, sphere1));
     // w.add_object(new WorldObject(8, new Lambertian(color(0.1, 0.2, 0.5)), &w, sphere8));
     // w.add_object(new WorldObject(9, new Dielectric(1.5), &w, sphere9));
     // w.add_object(new WorldObject(10, new Dielectric(1.5), &w, sphere10));
-    //w.add_object(new WorldObject(10, new Dielectric(1.5), &w, sphere1));
 
-    Camera* cam = new Camera(width, height, 90);
-    cam->look(vector(0, 0.4, -1));
+    Camera* cam = new Camera(width, height, 60);
+    cam->position_look(vector(1, 0, 5), vector(0, 2, 0));
 
     fprintf(outfile, "P3\n%i %i\n255\n", width, height);
     intersection hit;
