@@ -30,14 +30,14 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     Material* blue    = new Lambertian(color(0, 0, 1));
     Material* ground  = new Lambertian(color(0.8, 0.8, 0));
     Material* metal   = new Metal(color(0.6, 0.2, 0.3), 0.2);
-    Material* mirror  = new Metal(color(0.85, 0.85, 0.7), 0);
+    Material* mirror  = new Metal(color(0.6, 0.6, 0.9), 0.04);
     Material* diffuse = new Metal(color(0.3, 0.5, 0.8), 0.75);
     Material* glass   = new Dielectric(1.5);
 
-    vector focus(0, 0, 0);
+    // vector focus(0, 2, -2);
 
     // geometric shape declarations
-    geometry* pointer       = new sphere(focus, 0.1);
+    // geometry* pointer       = new sphere(focus, 0.3);
     geometry* ground_sphere = new sphere(vector(0, -1001, -2), 1000);
     geometry* sphere1       = new sphere(vector(0, 0, -3), 1.0);
     geometry* sphere2       = new sphere(vector(2.0, -0.25, -3), 0.75);
@@ -46,10 +46,10 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     geometry* mirror5       = new sphere(vector(15, 0, -3), 10);
     geometry* diffuse6      = new sphere(vector(-1, 2, -12), 6);
 
-    geometry* sphere7  = new sphere(vector(1, 0, -1.25), 0.5);
-    geometry* sphere8  = new sphere(vector(0, 0, -1.25), 0.5);
-    geometry* sphere9  = new sphere(vector(-1, 0, -1.25), 0.5);
-    geometry* sphere10 = new sphere(vector(-1, 0, -1.25), -0.45);
+    // geometry* sphere7  = new sphere(vector(1, 0, -1.25), 0.5);
+    // geometry* sphere8  = new sphere(vector(0, 0, -1.25), 0.5);
+    // geometry* sphere9  = new sphere(vector(-1, 0, -1.25), 0.5);
+    // geometry* sphere10 = new sphere(vector(-1, 0, -1.25), -0.45);
 
     // refractive scene tests
     // geometry* sphere7 = new sphere(vector(0.75, 0, -1.5), 0.5);
@@ -62,10 +62,10 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     w.add_object(new WorldObject(2, glass, &w, sphere2));
     w.add_object(new WorldObject(3, mirror, &w, sphere3));
     w.add_object(new WorldObject(4, metal, &w, metal4));
-    w.add_object(new WorldObject(5, diffuse, &w, mirror5));
+    w.add_object(new WorldObject(5, mirror, &w, mirror5));
     w.add_object(new WorldObject(6, blue, &w, diffuse6));
 
-    w.add_object(new WorldObject(11, new Lambertian(color(0, 0, 0)), &w, pointer));
+    // w.add_object(new WorldObject(11, new Lambertian(color(0, 0, 0)), &w, pointer));
 
     // w.add_object(new WorldObject(7, new Metal(color(0.8, 0.6, 0.2), 0.6), &w, sphere1));
     // w.add_object(new WorldObject(8, new Lambertian(color(0.1, 0.2, 0.5)), &w, sphere8));
@@ -73,7 +73,7 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     // w.add_object(new WorldObject(10, new Dielectric(1.5), &w, sphere10));
 
     Camera* cam = new Camera(width, height, 74);
-    cam->position_look(vector(1, 0, 5), focus);
+    cam->position_look(vector(-2, 2, 1), vector(2, 1, -2));
 
     fprintf(outfile, "P3\n%i %i\n255\n", width, height);
     intersection hit;
