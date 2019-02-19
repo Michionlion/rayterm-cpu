@@ -8,6 +8,7 @@
 struct sphere : geometry {
     vector center;
     scalar radius;
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
     sphere(vector c, scalar r) : center(c), radius(r){};
 

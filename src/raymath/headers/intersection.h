@@ -8,6 +8,7 @@ struct intersection {
     vector position;
     vector normal;
     scalar distance;
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
     intersection() : hit(false), id(-1){};
     intersection(long id, vector position, vector normal, scalar distance)

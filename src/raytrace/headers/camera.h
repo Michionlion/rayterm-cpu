@@ -16,6 +16,7 @@ class Camera {
     Eigen::Matrix<scalar, 3, 3> camera_to_world;
 
    public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     Camera(int width, int height, scalar vertical_fov)
         : width(width), height(height), vertical_fov(vertical_fov) {
         aspect_ratio   = scalar(width) / scalar(height);
