@@ -1,7 +1,6 @@
 #ifndef _RAYTERM_CAMERA_H_
 #define _RAYTERM_CAMERA_H_
 #include <cmath>
-#include "Eigen/Dense"
 #include "raymath"
 
 class Camera {
@@ -13,7 +12,7 @@ class Camera {
 
     vector look_target;
     vector origin;
-    Eigen::Matrix<scalar, 3, 3> camera_to_world;
+    matrix44 camera_to_world;
 
    public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -24,6 +23,10 @@ class Camera {
         origin         = vector(0, 0, 0);
         look_target    = vector(0, 0, -1);
         update_camera_matrix();
+        camera_to_world(0, 3) = 0;
+        camera_to_world(1, 3) = 0;
+        camera_to_world(2, 3) = 0;
+        camera_to_world(3, 3) = 1;
     }
 
     void position(const vector& new_origin) {
@@ -57,6 +60,9 @@ class Camera {
         camera_to_world(2, 0) = forward.x();
         camera_to_world(2, 1) = forward.y();
         camera_to_world(2, 2) = forward.z();
+        camera_to_world(3, 0) = origin.x();
+        camera_to_world(3, 1) = origin.y();
+        camera_to_world(3, 2) = origin.z();
     }
 
     // get the ray originating from the camera going through screen coordinate (u, v)
