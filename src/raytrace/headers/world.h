@@ -24,7 +24,9 @@ class WorldObject {
         for (geometry_list::iterator it = geometrys.begin(); it != geometrys.end(); ++it) {
             delete (*it);
         }
-        delete material;
+        // other things may also use this -- leave the creator to delete it
+        // only assume we own the geometry
+        // delete material;
     }
 
     void add_geometry(geometry* geom) { geometrys.push_back(geom); }
