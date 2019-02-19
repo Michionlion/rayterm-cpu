@@ -1,7 +1,6 @@
 #ifndef _RAYMATH_GEOMETRY_H_
 #define _RAYMATH_GEOMETRY_H_
 #include <list>
-#include <memory>
 #include "color.h"
 #include "intersection.h"
 #include "types.h"
@@ -22,6 +21,6 @@ struct geometry {
     virtual ~geometry() {}
 };
 
-typedef std::list<std::unique_ptr<geometry>> geometry_list;
+typedef std::list<geometry*> geometry_list;
 
 #endif
