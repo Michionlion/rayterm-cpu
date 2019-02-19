@@ -79,13 +79,13 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     intersection hit;
     float pixels = width * height;
     int pixel    = 0;
-    for (int y = height - 1; y >= 0; y--) {
+    for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             color outcol(0, 0, 0);
             ray r;
             for (int sample = 0; sample < SAMPLES; sample++) {
                 scalar u = 2 * ((scalar(x) + random_scalar()) / scalar(width)) - 1;
-                scalar v = 2 * ((scalar(y) + random_scalar()) / scalar(height)) - 1;
+                scalar v = 1 - 2 * ((scalar(y) + random_scalar()) / scalar(height));
                 r        = cam->get_screen_ray(u, v);
                 outcol += w.trace(r, hit, 0);
             }
