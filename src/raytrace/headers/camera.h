@@ -75,9 +75,17 @@ class Camera {
         return ray(origin, direction);
     }
 
-    vector toWorldDir(vector direction) { return camera_to_world * direction; }
+    vector toWorldDir(const vector& direction) {
+        vector4 mult   = vector4::Constant(1);
+        mult.head<3>() = direction;
+        return (camera_to_world * mult).head<3>();
+    }
 
-    vector toWorldPos(vector position) { return origin + position; }
+    vector toWorldPos(const vector& position) {
+        vector4 mult   = vector4::Constant(0);
+        mult.head<3>() = position;
+        return (camera_to_world * mult).head<3>();
+    }
 };
 
 #endif
