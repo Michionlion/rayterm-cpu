@@ -86,7 +86,7 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
             for (int sample = 0; sample < SAMPLES; sample++) {
                 scalar u = 2 * ((scalar(x) + random_scalar()) / scalar(width)) - 1;
                 scalar v = 2 * ((scalar(y) + random_scalar()) / scalar(height)) - 1;
-                r    = cam->get_screen_ray(u, v);
+                r        = cam->get_screen_ray(u, v);
                 outcol += w.trace(r, hit, 0);
             }
 
