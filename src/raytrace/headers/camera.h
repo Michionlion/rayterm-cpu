@@ -18,15 +18,15 @@ class Camera {
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     Camera(int width, int height, scalar vertical_fov)
         : width(width), height(height), vertical_fov(vertical_fov) {
-        aspect_ratio   = scalar(width) / scalar(height);
-        fov_height_len = tan((vertical_fov / 2 * M_PI / 180));
-        origin         = vector(0, 0, 0);
-        look_target    = vector(0, 0, -1);
+        aspect_ratio                   = scalar(width) / scalar(height);
+        fov_height_len                 = tan((vertical_fov / 2 * M_PI / 180));
+        origin                         = vector(0, 0, 0);
+        look_target                    = vector(0, 0, -1);
+        camera_to_world.coeffRef(0, 3) = 0;
+        camera_to_world.coeffRef(1, 3) = 0;
+        camera_to_world.coeffRef(2, 3) = 0;
+        camera_to_world.coeffRef(3, 3) = 1;
         update_camera_matrix();
-        camera_to_world(0, 3) = 0;
-        camera_to_world(1, 3) = 0;
-        camera_to_world(2, 3) = 0;
-        camera_to_world(3, 3) = 1;
     }
 
     void position(const vector& new_origin) {
@@ -51,18 +51,18 @@ class Camera {
         vector right   = wup.cross(forward);
         vector up      = forward.cross(right);
 
-        camera_to_world(0, 0) = right.x();
-        camera_to_world(0, 1) = right.y();
-        camera_to_world(0, 2) = right.z();
-        camera_to_world(1, 0) = up.x();
-        camera_to_world(1, 1) = up.y();
-        camera_to_world(1, 2) = up.z();
-        camera_to_world(2, 0) = forward.x();
-        camera_to_world(2, 1) = forward.y();
-        camera_to_world(2, 2) = forward.z();
-        camera_to_world(3, 0) = origin.x();
-        camera_to_world(3, 1) = origin.y();
-        camera_to_world(3, 2) = origin.z();
+        camera_to_world.coeffRef(0, 0) = right.coeff(0);
+        camera_to_world.coeffRef(0, 1) = right.coeff(1);
+        camera_to_world.coeffRef(0, 2) = right.coeff(2);
+        camera_to_world.coeffRef(1, 0) = up.coeff(0);
+        camera_to_world.coeffRef(1, 1) = up.coeff(1);
+        camera_to_world.coeffRef(1, 2) = up.coeff(2);
+        camera_to_world.coeffRef(2, 0) = forward.coeff(0);
+        camera_to_world.coeffRef(2, 1) = forward.coeff(1);
+        camera_to_world.coeffRef(2, 2) = forward.coeff(2);
+        camera_to_world.coeffRef(3, 0) = origin.coeff(0);
+        camera_to_world.coeffRef(3, 1) = origin.coeff(1);
+        camera_to_world.coeffRef(3, 2) = origin.coeff(2);
     }
 
     // get the ray originating from the camera going through screen coordinate (u, v)
