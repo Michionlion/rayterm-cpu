@@ -10,6 +10,7 @@ class Material {
     // is returned.
     virtual bool scatter(
         const ray& incoming, ray& outgoing, const intersection& hit, color& attenuation) const = 0;
+    virtual ~Material() {}
 };
 
 class Lambertian : public Material {

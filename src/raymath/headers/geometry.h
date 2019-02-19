@@ -18,6 +18,8 @@ struct geometry {
         this->intersects(r, hit);
         return hit;
     }
+
+    virtual ~geometry() {}
 };
 
 typedef std::list<std::unique_ptr<geometry>> geometry_list;
