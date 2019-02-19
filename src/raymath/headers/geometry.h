@@ -2,7 +2,6 @@
 #define _RAYMATH_GEOMETRY_H_
 #include <list>
 #include <memory>
-#include "Eigen/Dense"
 #include "color.h"
 #include "intersection.h"
 #include "types.h"

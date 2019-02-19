@@ -1,6 +1,5 @@
 #ifndef _RAYMATH_INTERSECTION_H_
 #define _RAYMATH_INTERSECTION_H_
-#include "Eigen/Dense"
 #include "types.h"
 
 struct intersection {
