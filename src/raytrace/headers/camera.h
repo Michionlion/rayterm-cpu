@@ -26,17 +26,17 @@ class Camera {
         update_camera_matrix();
     }
 
-    void position(vector new_origin) {
+    void position(const vector& new_origin) {
         origin = new_origin;
         update_camera_matrix();
     }
 
-    void look(vector target) {
+    void look(const vector& target) {
         look_target = target;
         update_camera_matrix();
     }
 
-    void position_look(vector from, vector target) {
+    void position_look(const vector& from, const vector& target) {
         this->origin      = from;
         this->look_target = target;
         update_camera_matrix();

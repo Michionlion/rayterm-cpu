@@ -16,8 +16,8 @@ class Lambertian : public Material {
     color albedo;
 
    public:
-    Lambertian(color albedo) : albedo(albedo){};
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+    Lambertian(const color& albedo) : albedo(albedo){};
     bool scatter(
         const ray& incoming, ray& outgoing, const intersection& hit, color& attenuation) const;
 };
@@ -27,8 +27,8 @@ class Metal : public Material {
     scalar roughness;
 
    public:
-    Metal(color albedo, scalar roughness) : albedo(albedo), roughness(roughness){};
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+    Metal(const color& albedo, scalar roughness) : albedo(albedo), roughness(roughness){};
     bool scatter(
         const ray& incoming, ray& outgoing, const intersection& hit, color& attenuation) const;
 };

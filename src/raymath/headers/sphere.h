@@ -10,7 +10,7 @@ struct sphere : geometry {
     scalar radius;
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-    sphere(vector c, scalar r) : center(c), radius(r){};
+    sphere(const vector& c, scalar r) : center(c), radius(r){};
 
     void intersects(ray r, intersection& record);
     using geometry::intersects;
