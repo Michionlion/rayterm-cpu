@@ -34,8 +34,10 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     Material* diffuse = new Metal(color(0.3, 0.5, 0.8), 0.75);
     Material* glass   = new Dielectric(1.5);
 
+    vector focus(0, 0, 0);
+
     // geometric shape declarations
-    geometry* pointer       = new sphere(vector(0, 0, 0), 0.1);
+    geometry* pointer       = new sphere(focus, 0.1);
     geometry* ground_sphere = new sphere(vector(0, -1001, -2), 1000);
     geometry* sphere1       = new sphere(vector(0, 0, -3), 1.0);
     geometry* sphere2       = new sphere(vector(2.0, -0.25, -3), 0.75);
@@ -70,8 +72,8 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     // w.add_object(new WorldObject(9, new Dielectric(1.5), &w, sphere9));
     // w.add_object(new WorldObject(10, new Dielectric(1.5), &w, sphere10));
 
-    Camera* cam = new Camera(width, height, 60);
-    cam->position_look(vector(1, 0, 5), vector(0, 2, 0));
+    Camera* cam = new Camera(width, height, 74);
+    cam->position_look(vector(1, 0, 5), focus);
 
     fprintf(outfile, "P3\n%i %i\n255\n", width, height);
     intersection hit;
@@ -80,10 +82,11 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     for (int y = height - 1; y >= 0; y--) {
         for (int x = 0; x < width; x++) {
             color outcol(0, 0, 0);
+            ray r;
             for (int sample = 0; sample < SAMPLES; sample++) {
                 scalar u = 2 * ((scalar(x) + random_scalar()) / scalar(width)) - 1;
                 scalar v = 2 * ((scalar(y) + random_scalar()) / scalar(height)) - 1;
-                ray r    = cam->get_screen_ray(u, v);
+                r    = cam->get_screen_ray(u, v);
                 outcol += w.trace(r, hit, 0);
             }
 

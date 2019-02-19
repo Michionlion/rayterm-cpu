@@ -19,8 +19,9 @@ class Camera {
     Camera(int width, int height, scalar vertical_fov) : width(width), height(height), vertical_fov(vertical_fov) {
         aspect_ratio   = scalar(width) / scalar(height);
         fov_height_len = tan((vertical_fov / 2 * M_PI / 180));
-        position(vector(0, 0, 0));
-        look(vector(0, 0, -1));
+        origin = vector(0, 0, 0);
+        look_target = vector(0, 0, -1);
+        update_camera_matrix();
     }
 
     void position(vector new_origin) {
@@ -33,9 +34,9 @@ class Camera {
         update_camera_matrix();
     }
 
-    void position_look(vector origin, vector look_target) {
-        this->origin = origin;
-        this->look_target = look_target;
+    void position_look(vector from, vector target) {
+        this->origin = from;
+        this->look_target = target;
         update_camera_matrix();
     }
 
@@ -57,6 +58,7 @@ class Camera {
     }
 
     // get the ray originating from the camera going through screen coordinate (u, v)
+    // screen coordinates are in (-1, 1)
     ray get_screen_ray(scalar u, scalar v) {
         scalar camx = u * aspect_ratio * fov_height_len;
         scalar camy = v * fov_height_len;

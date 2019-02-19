@@ -1,12 +1,6 @@
 #include <gtest/gtest.h>
 #include "camera.h"
 
-TEST(Camera, AspectAndFOV) {
-    Camera* cam = new Camera(80, 40, 90);
-    //ASSERT_EQ(cam->aspect_ratio, 2);
-    //ASSERT_EQ(cam->fov_height_len, 2);
-}
-
 TEST(Camera, ToWorldDir) {
     vector expected, actual;
     Camera* cam = new Camera(80, 40, 90);
@@ -21,7 +15,7 @@ TEST(Camera, ToWorldDir) {
 
     cam->look(vector(1, 0, 0));
     actual = cam->toWorldDir(vector(0, 0, -1));
-    expected = vector(-1, 0, 0);
+    expected = vector(1, 0, 0);
     EXPECT_TRUE(actual.isApprox(expected, 0.0001))
         << "  Actual: "
         << "{" << actual[0] << ", " << actual[1] << ", " << actual[2] << "}"
@@ -40,6 +34,38 @@ TEST(Camera, ToWorldDir) {
     cam->look(vector(1, 1, -1));
     actual = cam->toWorldDir(vector(0, 0, 1));
     expected = vector(-1, -1, -1).normalized();
+    EXPECT_TRUE(actual.isApprox(expected, 0.0001))
+        << "  Actual: "
+        << "{" << actual[0] << ", " << actual[1] << ", " << actual[2] << "}"
+        << "\nExpected: "
+        << "{" << expected[0] << ", " << expected[1] << ", " << expected[2] << "}";
+}
+
+TEST(Camera, ToWorldDirDifferentOrigin) {
+    vector expected, actual;
+    Camera* cam = new Camera(80, 40, 90);
+
+    cam->position(vector(1, 0, 0));
+    actual = cam->toWorldDir(vector(0, 0, -1));
+    expected = vector(0, 0, -1);
+    EXPECT_TRUE(actual.isApprox(expected, 0.0001))
+        << "  Actual: "
+        << "{" << actual[0] << ", " << actual[1] << ", " << actual[2] << "}"
+        << "\nExpected: "
+        << "{" << expected[0] << ", " << expected[1] << ", " << expected[2] << "}";
+
+    cam->look(vector(1, 0, 0));
+    actual = cam->toWorldDir(vector(0, 0, -1));
+    expected = vector(1, 0, 0);
+    EXPECT_TRUE(actual.isApprox(expected, 0.0001))
+        << "  Actual: "
+        << "{" << actual[0] << ", " << actual[1] << ", " << actual[2] << "}"
+        << "\nExpected: "
+        << "{" << expected[0] << ", " << expected[1] << ", " << expected[2] << "}";
+
+    cam->look(vector(0, 3, -3));
+    actual = cam->toWorldDir(vector(0, 0, -1));
+    expected = vector(0, -3, 3).normalized();
     EXPECT_TRUE(actual.isApprox(expected, 0.0001))
         << "  Actual: "
         << "{" << actual[0] << ", " << actual[1] << ", " << actual[2] << "}"
