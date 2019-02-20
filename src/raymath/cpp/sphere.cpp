@@ -3,7 +3,7 @@
 #include "color.h"
 #include "intersection.h"
 
-#define MIN_CONTACT 0.00001
+#define MIN_CONTACT 0.000001
 
 void sphere::intersects(ray r, intersection& record) {
     // Solves (ray_dir^2)t^2 +2(ray_dir dot (ray_origin - sphere_center))t
@@ -24,7 +24,7 @@ void sphere::intersects(ray r, intersection& record) {
         scalar t            = (-b - sqrt_discrim) * inv_denom;
         bool dropped        = false;
         scalar ot;
-        if (t < -MIN_CONTACT) {
+        if (t < MIN_CONTACT) {
             ot      = t;
             t       = (-b + sqrt_discrim) * inv_denom;
             dropped = true;
