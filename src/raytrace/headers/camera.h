@@ -76,6 +76,7 @@ class Camera {
         // if we were shooting rays from somewhere other than the camera's origin, the toWorldPos
         // method would need to be used. However, since we know that (0, 0, 0) -> origin in the
         // camera transform, there is no need to do the extra calculation.
+        vector origin = toWorldPos(vector(0, 0, 0));
         vector direction = toWorldDir((vector(camx, camy, -1)).normalized()).normalized();
         return ray(origin, direction);
     }
