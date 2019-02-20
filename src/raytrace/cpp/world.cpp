@@ -1,16 +1,16 @@
 #include "world.h"
 
-WorldObjectPtr* World::intersects(ray r, intersection& record) {
+WorldObject* World::intersects(ray r, intersection& record) {
     record.hit = false;
     intersection hit;
-    WorldObjectPtr* obj_hit;
+    WorldObject* obj_hit;
     scalar closest_t = INFINITY;
     for (worldobject_list::iterator it = objects.begin(); it != objects.end(); ++it) {
         (*it)->intersects(r, hit);
         if (hit && hit.distance < closest_t) {
             record    = hit;
             closest_t = record.distance;
-            obj_hit   = &(*it);
+            obj_hit   = *it;
         }
     }
     return obj_hit;
@@ -18,9 +18,9 @@ WorldObjectPtr* World::intersects(ray r, intersection& record) {
 
 color World::trace(ray r, intersection& record, int depth) {
     if (depth < max_depth) {
-        WorldObjectPtr* obj_hit = intersects(r, record);
+        WorldObject* obj_hit = intersects(r, record);
         if (record) {
-            return (*obj_hit)->colorize(r, record, depth);
+            return obj_hit->colorize(r, record, depth);
         }
     }
 

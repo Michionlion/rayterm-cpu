@@ -29,6 +29,10 @@ while [ $# -gt 0 ]; do
         -np|--no-progress)
             FLAGS="$FLAGS-PNO_PROGRESS "
         ;;
+
+        -t|--test)
+            TEST=true
+        ;;
         *)
             echo -e "\033[2;91mUnrecognized flag '$1!'\033[0m"
     esac
@@ -48,7 +52,12 @@ else
 fi
 
 if  [[ "$COMPILED" != "0" ]]; then
-    exit;
+    exit
+fi
+
+if [[ "$TEST" = "true" ]]; then
+    ./build/install/raytraceTest/release/raytraceTest
+    exit
 fi
 
 ./build/install/raytraceTest/release/raytraceTest --gtest_filter=RaytracerTest.Success

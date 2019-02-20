@@ -4,7 +4,7 @@
 #include "Eigen/Dense"
 #include "types.h"
 
-typedef Eigen::Vector3d color;
+typedef Eigen::Matrix<scalar, 3, 1> color;
 
 struct colori {
     uint8_t r;

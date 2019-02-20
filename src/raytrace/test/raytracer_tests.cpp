@@ -19,7 +19,7 @@ TEST(RaytracerTest, Success) {
 
     printf("\b\b\b100%% -- Render Complete!\n");
 
-    printf("Completed in %dms\n",
+    printf("Completed in %ldms\n",
         std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count());
 
     EXPECT_EQ(raytrace_ppm("test_image.ppm"), 0) << "Did not successfully generate a test image!";
