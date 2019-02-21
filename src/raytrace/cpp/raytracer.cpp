@@ -28,7 +28,7 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     Material* red     = new Lambertian(color(1, 0, 0));
     Material* green   = new Lambertian(color(0, 1, 0));
     Material* blue    = new Lambertian(color(0, 0, 1));
-    Material* ground  = new Lambertian(color(0.8, 0.8, 0));
+    Material* grass   = new Lambertian(color(0.8, 0.8, 0));
     Material* metal   = new Metal(color(0.6, 0.2, 0.3), 0.4);
     Material* mirror  = new Metal(color(0.6, 0.6, 0.9), 0.04);
     Material* diffuse = new Metal(color(0.3, 0.5, 0.8), 0.75);
@@ -38,13 +38,13 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
 
     // geometric shape declarations
     // geometry* pointer       = new sphere(focus, 0.3);
-    geometry* ground_sphere = new sphere(vector(0, -1001, -2), 1000);
-    geometry* sphere1       = new sphere(vector(0, 0, -3), 1.0);
-    geometry* sphere2       = new sphere(vector(2.0, -0.25, -3), 0.75);
-    geometry* sphere3       = new sphere(vector(-2.75, 0.25, -3), 1.5);
-    geometry* metal4        = new sphere(vector(-0.5, -0.5, -1.5), 0.5);
-    geometry* mirror5       = new sphere(vector(15, 0, -3), 10);
-    geometry* diffuse6      = new sphere(vector(-1, 2, -12), 6);
+    geometry* ground   = new disk(vector(0, -1, -1.2), vector(0, 1, 0), 25);
+    geometry* sphere1  = new sphere(vector(0, 0, -3), 1.0);
+    geometry* sphere2  = new sphere(vector(2.0, -0.25, -3), 0.75);
+    geometry* sphere3  = new sphere(vector(-2.75, 0.25, -3), 1.5);
+    geometry* metal4   = new sphere(vector(-0.5, -0.5, -1.5), 0.5);
+    geometry* mirror5  = new sphere(vector(15, 0, -3), 10);
+    geometry* diffuse6 = new sphere(vector(-1, 2, -12), 6);
 
     // geometry* sphere7  = new sphere(vector(1, 0, -1.25), 0.5);
     // geometry* sphere8  = new sphere(vector(0, 0, -1.25), 0.5);
@@ -57,7 +57,7 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     geometry* sphere9 = new sphere(vector(0, 0, -0.8), 0.5);
 
     // // world object addition and creation
-    w.add_object(new WorldObject(0, ground, &w, ground_sphere));
+    w.add_object(new WorldObject(0, grass, &w, ground));
     // w.add_object(new WorldObject(1, red, &w, sphere1));
     // w.add_object(new WorldObject(2, glass, &w, sphere2));
     // w.add_object(new WorldObject(3, mirror, &w, sphere3));
@@ -73,7 +73,7 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     // w.add_object(new WorldObject(10, new Dielectric(1.5), &w, sphere10));
 
     Camera* cam = new Camera(width, height, 74);
-    cam->position_look(vector(0, 0.5, 0.5), vector(0, 0, -3));
+    cam->position_look(vector(0, 0.5, 0.5), vector(0, 0, -1.2));
 
     fprintf(outfile, "P3\n%i %i\n255\n", width, height);
     intersection hit;

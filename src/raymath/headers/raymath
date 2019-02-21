@@ -1,6 +1,7 @@
 #include "color.h"
 #include "geometry.h"
 #include "intersection.h"
+#include "disk.h"
 #include "random.h"
 #include "sphere.h"
 #include "types.h"
