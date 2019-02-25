@@ -23,5 +23,5 @@ color WorldObject::colorize(ray r, intersection& record, int depth) {
     if (depth < world->max_depth && material->scatter(r, scattered, record, outcol)) {
         return outcol.cwiseProduct(world->trace(scattered, record, depth + 1));
     }
-    return outcol;
+    return color(0, 0, 0);
 }

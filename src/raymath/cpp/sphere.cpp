@@ -17,7 +17,7 @@ void sphere::intersects(ray r, intersection& record) {
 
     scalar discriminant = b * b - a * c;
 
-    if (discriminant > 0) {
+    if (discriminant >= 0) {
         // check both roots -- get smallest non-negative
         scalar sqrt_discrim = sqrt(discriminant);
         scalar inv_denom    = 1 / a;

@@ -59,7 +59,14 @@ bool Metal::scatter(
     vector reflected = reflect(incoming.direction(), hit.normal);
     outgoing         = ray(hit.position, reflected + roughness * random_in_usphere());
     attenuation      = albedo;
-    return reflected.dot(hit.normal) > 0;
+    // return true;
+
+    if (reflected.dot(hit.normal) > 0) {
+        return true;
+    } else {
+        attenuation = color(0, 0, 1);
+        return false;
+    }
 }
 
 bool Dielectric::scatter(

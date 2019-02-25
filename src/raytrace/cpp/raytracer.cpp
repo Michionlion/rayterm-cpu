@@ -67,7 +67,8 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
 
     // w.add_object(new WorldObject(11, new Lambertian(color(0, 0, 0)), &w, pointer));
 
-    w.add_object(new WorldObject(7, new Metal(color(0.8, 0.6, 0.2), 0.6), &w, sphere7));
+    w.add_object(new WorldObject(7, new Metal(color(0.8, 0.6, 0.2), 0.25), &w, sphere7));
+    // w.add_object(new WorldObject(7, new Metal(color(1, 1, 1), 0.0), &w, sphere7));
     w.add_object(new WorldObject(8, new Lambertian(color(0.1, 0.2, 0.5)), &w, sphere8));
     w.add_object(new WorldObject(9, new Dielectric(1.5), &w, sphere9));
     // w.add_object(new WorldObject(10, new Dielectric(1.5), &w, sphere10));
