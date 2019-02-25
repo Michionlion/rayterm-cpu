@@ -10,4 +10,12 @@ vector random_in_usphere() {
     return vec;
 }
 
+vector random_in_uhemisphere(const vector& normal) {
+    vector vec;
+    do {
+        vec = 2 * vector(random_scalar(), random_scalar(), random_scalar()) - vector(1, 1, 1);
+    } while (vec.squaredNorm() >= 1.0 || normal.dot(vec) <= 0);
+    return vec;
+}
+
 scalar random_scalar() { return drand48(); }
