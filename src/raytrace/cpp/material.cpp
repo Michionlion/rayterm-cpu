@@ -48,7 +48,7 @@ scalar schlick(scalar cos, scalar refrac_index) {
 
 bool Lambertian::scatter(
     const ray& incoming, ray& outgoing, const intersection& hit, color& attenuation) const {
-    vector bounce(hit.position + hit.normal + random_in_usphere());
+    vector bounce(hit.position + hit.normal + random_in_usphere().normalized());
     outgoing    = ray(hit.position, bounce - hit.position);
     attenuation = albedo;
     return true;
@@ -57,7 +57,7 @@ bool Lambertian::scatter(
 bool Metal::scatter(
     const ray& incoming, ray& outgoing, const intersection& hit, color& attenuation) const {
     vector reflected = reflect(incoming.direction(), hit.normal);
-    outgoing         = ray(hit.position, reflected + roughness * random_in_usphere());
+    outgoing         = ray(hit.position, reflected + roughness * random_in_usphere().normalized());
     attenuation      = albedo;
     // return true;
 
