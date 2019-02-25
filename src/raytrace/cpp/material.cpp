@@ -1,6 +1,12 @@
 #include "material.h"
 #include <cmath>
 
+// linear interpolation between from to to,
+// assumes t is 0-1.
+vector lerp(const vector& from, const vector& to, scalar t) {
+    return (1 - t) * from + t * to;
+}
+
 vector reflect(const vector& in, const vector& normal) {
     return vector(in - 2 * in.dot(normal) * normal);
 }
@@ -48,8 +54,8 @@ scalar schlick(scalar cos, scalar refrac_index) {
 
 bool Lambertian::scatter(
     const ray& incoming, ray& outgoing, const intersection& hit, color& attenuation) const {
-    vector bounce(hit.position + hit.normal + random_in_usphere().normalized());
-    outgoing    = ray(hit.position, bounce - hit.position);
+    vector bounce = random_in_uhemisphere(hit.normal);
+    outgoing    = ray(hit.position, bounce);
     attenuation = albedo;
     return true;
 }
@@ -57,14 +63,14 @@ bool Lambertian::scatter(
 bool Metal::scatter(
     const ray& incoming, ray& outgoing, const intersection& hit, color& attenuation) const {
     vector reflected = reflect(incoming.direction(), hit.normal);
-    outgoing         = ray(hit.position, reflected + roughness * random_in_usphere().normalized());
+    outgoing         = ray(hit.position, lerp(reflected, random_in_uhemisphere(hit.normal).normalized(), roughness));
     attenuation      = albedo;
     // return true;
 
     if (reflected.dot(hit.normal) > 0) {
         return true;
     } else {
-        attenuation = color(0, 0, 1);
+        // attenuation = color(0, 0, 1);
         return false;
     }
 }
