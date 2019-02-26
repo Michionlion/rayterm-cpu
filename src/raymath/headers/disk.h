@@ -1,15 +1,18 @@
-#ifndef _RAYMATH_SPHERE_H_
-#define _RAYMATH_SPHERE_H_
+#ifndef _RAYMATH_DISK_H_
+#define _RAYMATH_DISK_H_
 #include "geometry.h"
 #include "intersection.h"
 #include "types.h"
 
-struct sphere : geometry {
+struct disk : geometry {
     vector center;
+    vector normal;
     scalar radius;
+    scalar radius_sqr;
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-    sphere(const vector& c, scalar r) : center(c), radius(r){};
+    disk(const vector& c, const vector& n, scalar r)
+        : center(c), normal(n), radius(r), radius_sqr(r * r){};
 
     void intersects(ray r, intersection& record);
     using geometry::intersects;

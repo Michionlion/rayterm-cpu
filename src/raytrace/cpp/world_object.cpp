@@ -20,8 +20,12 @@ void WorldObject::intersects(ray r, intersection& record) {
 color WorldObject::colorize(ray r, intersection& record, int depth) {
     ray scattered;
     color outcol(1, 1, 1);
+
+    // try to scatter the ray
     if (depth < world->max_depth && material->scatter(r, scattered, record, outcol)) {
         return outcol.cwiseProduct(world->trace(scattered, record, depth + 1));
     }
+
+    // the ray did not scatter, simply use the returned attenuation
     return outcol;
 }

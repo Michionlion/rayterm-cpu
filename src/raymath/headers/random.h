@@ -3,6 +3,7 @@
 #include "types.h"
 
 vector random_in_usphere();
+vector random_in_uhemisphere(const vector& normal);
 
 scalar random_scalar();
 
