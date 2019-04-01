@@ -1,5 +1,7 @@
 # `RayTerm`
 
+[![Build Status](https://travis-ci.com/Michionlion/rayterm-cpu.svg?branch=master)](https://travis-ci.com/Michionlion/rayterm-cpu)
+
 A Ray-Tracing Graphics Engine for XTerm-like Terminals
 
 ## Development
