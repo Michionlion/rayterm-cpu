@@ -29,7 +29,7 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     Material* green   = new Lambertian(color(0, 1, 0));
     Material* blue    = new Lambertian(color(0, 0, 1));
     Material* grass   = new Lambertian(color(0.8, 0.8, 0));
-    Material* metal   = new Metal(color(0.6, 0.2, 0.3), 0.4);
+    Material* metal   = new Metal(color(0.47, 0.26, 0.34), 0.125);
     Material* mirror  = new Metal(color(0.6, 0.6, 0.9), 0.02);
     Material* diffuse = new Metal(color(0.3, 0.5, 0.8), 0.75);
     Material* glass   = new Dielectric(1.5);
@@ -52,9 +52,9 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
     // geometry* sphere10 = new sphere(vector(-1, 0, -1.25), -0.45);
 
     // refractive scene tests
-    //geometry* sphere7 = new sphere(vector(0.75, 0, -1.5), 0.5);
-    //geometry* sphere8 = new sphere(vector(-0.75, 0, -1.5), 0.5);
-    //geometry* sphere9 = new sphere(vector(0, 0, -0.8), 0.5);
+    // geometry* sphere7 = new sphere(vector(0.75, 0, -1.5), 0.5);
+    // geometry* sphere8 = new sphere(vector(-0.75, 0, -1.5), 0.5);
+    // geometry* sphere9 = new sphere(vector(0, 0, -0.8), 0.5);
     // geometry* sphere9 = new sphere(vector(0, 0, -2), 0.5);
 
     // // world object addition and creation
@@ -68,15 +68,15 @@ int raytrace_ppm(const char* filename, progress_callback cb /* = NULL */) {
 
     // w.add_object(new WorldObject(11, new Lambertian(color(0, 0, 0)), &w, pointer));
 
-    //w.add_object(new WorldObject(7, new Metal(color(0.8, 0.6, 0.2), 0.1), &w, sphere7));
+    // w.add_object(new WorldObject(7, new Metal(color(0.8, 0.6, 0.2), 0.1), &w, sphere7));
     // w.add_object(new WorldObject(7, new Metal(color(1, 1, 1), 0.0), &w, sphere7));
-    //w.add_object(new WorldObject(8, new Lambertian(color(0.1, 0.2, 0.5)), &w, sphere8));
-    //w.add_object(new WorldObject(9, new Dielectric(1.5), &w, sphere9));
+    // w.add_object(new WorldObject(8, new Lambertian(color(0.1, 0.2, 0.5)), &w, sphere8));
+    // w.add_object(new WorldObject(9, new Dielectric(1.5), &w, sphere9));
     // w.add_object(new WorldObject(10, new Dielectric(1.5), &w, sphere10));
 
     Camera* cam = new Camera(width, height, 74);
     cam->position_look(vector(-1, 0.75, 1), vector(1.75, 0.6, -2));
-    //cam->position_look(vector(0.75, 0.5, -0.5), vector(0.75, 0, -1.5));
+    // cam->position_look(vector(0.75, 0.5, -0.5), vector(0.75, 0, -1.5));
 
     fprintf(outfile, "P3\n%i %i\n255\n", width, height);
     intersection hit;
